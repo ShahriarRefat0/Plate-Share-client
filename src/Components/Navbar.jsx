@@ -61,7 +61,7 @@ const Navbar = () => {
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
       >
         <div className="pb-3 border-b border-b-gray-200">
-          <li className="text-sm font-bold">{user.displayName}</li>
+          <li className="text-sm font-semibold">{user.displayName}</li>
           <li className="text-xs">{user.email}</li>
         </div>
 
@@ -111,7 +111,7 @@ const Navbar = () => {
 
 
   return (
-    <div className="bg-[#009368] shadow-md h-20">
+    <div className="bg-[#009368] shadow-md h-20 font-secondary">
       <div className="navbar text-white w-11/12 mx-auto">
         {/* LEFT SIDE */}
         <div className="navbar-start">
@@ -148,7 +148,7 @@ const Navbar = () => {
               className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain"
             />
             <div className="flex flex-col leading-tight">
-              <h4 className="text-sm sm:text-base md:text-lg font-semibold">
+              <h4 className="text-sm sm:text-base md:text-lg font-semibold font-primary">
                 Plate Share
               </h4>
               <p className="text-[10px] sm:text-xs md:text-sm text-gray-200">

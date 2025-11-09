@@ -68,7 +68,7 @@ const Hero = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.8 }}
-                  className="text-3xl md:text-5xl font-bold mb-4 text-[#009368]"
+                  className="text-3xl md:text-5xl font-bold mb-4 text-[#009368] font-primary"
                 >
                   {slide.title}
                 </motion.h2>
@@ -76,7 +76,7 @@ const Hero = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6, duration: 1 }}
-                  className="text-lg md:text-xl max-w-2xl "
+                  className="text-lg md:text-xl max-w-2xl font-secondary"
                 >
                   {slide.desc}
                 </motion.p>
@@ -96,7 +96,7 @@ const Hero = () => {
     hover:bg-white hover:text-[#009368] hover:border-[#009368]
     border border-transparent
     duration-300 ease-in-out
-    w-40 md:w-48 lg:w-56
+    w-40 md:w-48 lg:w-56 font-primary
   "
                 >
                   View All Foods

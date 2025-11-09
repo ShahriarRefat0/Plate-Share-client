@@ -14,14 +14,14 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <div className="bg-[#009368] text-white">
-      <footer className="w-11/12 mx-auto py-14 md:py-20">
+      <footer className="w-11/12 mx-auto py-14 md:py-20 font-secondary">
         <div className="footer sm:footer-horizontal gap-10">
           {/* Logo + About */}
           <aside>
             <Link to="/" className="cursor-pointer flex gap-2 items-center">
               <img className="md:w-16 w-14" src={logo} alt="" />
               <div>
-                <h4 className="text-[18px] font-semibold  ">Plate Share</h4>
+                <h4 className="text-[18px] font-semibold font-primary ">Plate Share</h4>
                 <p className="text-[13px] ">We Care Humanity</p>
               </div>
             </Link>
