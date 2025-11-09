@@ -75,7 +75,7 @@ console.log(user)
 
            <div className="text-sm text-green-700">
              <a href="#" className="hover:underline">
-               Forget Password
+               Forget Password ?
              </a>
            </div>
 
