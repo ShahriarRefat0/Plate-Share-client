@@ -1,0 +1,57 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+
+/* 🚀 Animated shining gradient background */
+.animated-bg {
+  background: linear-gradient(135deg, #a8e6cf, #dcedc8, #f8f9f7, #bdf7c1);
+  background-size: 300% 300%;
+  animation: shineGlow 8s ease-in-out infinite;
+}
+
+/* Smooth animated gradient shifting */
+@keyframes shineGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Optional soft aura glow effect */
+.animated-bg {
+  position: relative;
+  /* ✅ Add this */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #a8e6cf, #dcedc8, #f8f9f7, #bdf7c1);
+  background-size: 300% 300%;
+  animation: shineGlow 8s ease-in-out infinite;
+  overflow: hidden;
+  /* ✅ Prevent unwanted scroll bars */
+}
+
+/* Glow pulsing animation */
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.55;
+    transform: scale(1.2);
+  }
+}
+.animated-bg::before {
+  filter: blur(40px);
+  /* instead of 80px - smoother on budget phones */
+}
