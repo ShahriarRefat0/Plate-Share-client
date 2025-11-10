@@ -25,11 +25,11 @@
 
 
   /* btn */
-  .card-btn {
-    @apply bg-[#ffff] text-[#009368] font-semibold px-6 py-2 rounded-lg hover:bg-[#009368] hover:text-[#ffff] border border-[#009368] transition-all duration-300;
+  .btn-secondary {
+    @apply bg-[#ffff] text-[#009368] font-semibold px-6 py-2 rounded-full hover:bg-[#009368] hover:text-[#ffff] border border-[#009368] transition-all duration-300;
   }
   .btn-primary{
-    @apply hover:bg-[#ffff] hover:text-[#009368] font-semibold px-6 py-2 rounded-lg  bg-[#009368] text-[#ffff] border border-[#009368] transition-all duration-300
+    @apply hover:bg-[#ffff] hover:text-[#009368] font-semibold px-6 py-2 rounded-full  bg-[#009368] text-[#ffff] border border-[#009368] transition-all duration-300
   }
 
 

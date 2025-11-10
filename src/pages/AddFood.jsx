@@ -4,8 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../authProvider/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router";
+
 
 const AddFood = () => {
   const [expireDate, setExpireDate] = useState(null);
@@ -51,6 +51,7 @@ const AddFood = () => {
                icon: "success",
                draggable: true,
              });
+           form.reset()
           navigate('/')
         }
       })
@@ -64,15 +65,17 @@ const AddFood = () => {
       });
   };
 
+  
+
   return (
     <div className="py-10 min-h-screen animated-bg">
       <div className="text-center">
-        <div className="text-primary text-xl flex gap-3 items-center justify-center ">
+        <Link to='/' className="text-primary text-xl flex gap-3 items-center justify-center ">
           <span>
             <HiOutlineArrowLeft />
           </span>{" "}
           <p>Back To Home</p>
-        </div>
+        </Link>
       </div>
       <div className="card">
         <div className=" flex items-center justify-center  py-10">

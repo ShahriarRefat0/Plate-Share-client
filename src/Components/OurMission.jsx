@@ -51,7 +51,7 @@ const OurMission = () => {
    ];
 
   return (
-    <div className="my-15">
+    <div className="my-20 w-11/12 mx-auto">
       <div className="text-center">
         <h1 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary  ">
           OUR <span className="text-[#009368]">MISSION</span>
@@ -61,7 +61,7 @@ const OurMission = () => {
           landfills.
         </p>
       </div>
-      <div className="grid md:grid-cols-3 gap-10 w-11/12 mx-auto mt-15">
+      <div className="grid md:grid-cols-3 gap-10  mt-15">
         {missions.map((mission) => (
           <div
             key={mission.id}

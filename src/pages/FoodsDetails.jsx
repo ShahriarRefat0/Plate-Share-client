@@ -21,8 +21,11 @@ const FoodsDetails = () => {
 //console.log(foodDetails);
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
-      <Link to='/'  className="mb-5 flex gap-3 items-center text-primary cursor-pointer">
-        <HiOutlineArrowLeft size={25}/> <p>Back</p>
+      <Link
+        to="/"
+        className="mb-5 flex gap-3 items-center text-primary cursor-pointer"
+      >
+        <HiOutlineArrowLeft size={25} /> <p>Back</p>
       </Link>
       <div className="bg-white shadow-2xl rounded-3xl overflow-hidden border border-gray-100">
         <div className="flex flex-col md:flex-row">
@@ -89,14 +92,9 @@ const FoodsDetails = () => {
             </div>
 
             <div className="flex flex-wrap gap-4 mt-8">
-              <button className="bg-[#009368] text-white font-semibold px-6 py-2 rounded-full hover:bg-[#007a55] transition duration-300 shadow-md">
-                Request This Food
-              </button>
+              <button className="btn-primary ">Request This Food</button>
 
-              <Link
-                to="/available-foods"
-                className="border border-[#009368] text-[#009368] font-semibold px-6 py-2 rounded-full hover:bg-[#009368] hover:text-white transition duration-300"
-              >
+              <Link to="/available-foods" className="btn-secondary">
                 Back to Foods
               </Link>
             </div>

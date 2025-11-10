@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FoodCard from './FoodCard';
 import { FaAnglesLeft, FaAnglesRight } from 'react-icons/fa6';
+import { Link } from 'react-router';
 
 
 const FeaturedFoods = () => {
@@ -17,9 +18,9 @@ const FeaturedFoods = () => {
 
 
   return (
-    <div className="w-11/12  mx-auto my-15">
+    <div className="w-11/12  mx-auto my-20">
       <div>
-        <h1 className="text-5xl font-primary font-semibold text-center">
+        <h1 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary">
           Featured <span className="text-primary">Foods</span>
         </h1>
       </div>
@@ -29,9 +30,12 @@ const FeaturedFoods = () => {
         ))}
       </div>
       <div className="flex items-center justify-center my-10">
-        <button className="btn-primary w-60 flex items-center justify-center gap-5">
+        <Link
+          to="/available-foods"
+          className="btn-primary w-60 flex items-center justify-center gap-5"
+        >
           <FaAnglesLeft /> Show All <FaAnglesRight />
-        </button>
+        </Link>
       </div>
     </div>
   );

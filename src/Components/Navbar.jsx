@@ -1,25 +1,38 @@
 import React, { use } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import logo from "../../public/logo.png";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../authProvider/AuthProvider";
 import { IoLogOut } from "react-icons/io5";
 import { MdOutlineLibraryAdd, MdOutlineManageHistory } from "react-icons/md";
 import { LuGitPullRequestCreateArrow } from "react-icons/lu";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logOutUser } = use(AuthContext);
-
-
+const navigate = useNavigate()
 
   const signOutUser = (e) => {
     e.preventDefault();
     logOutUser()
-      .then((res) => console.log("user logout",res))
-      .catch((e) => console.log(e));
+      .then((res) => {
+        //console.log("user logout", res)
+        Swal.fire({
+          title: "Login Successful",
+          icon: "success",
+          draggable: true,
+        });
+        navigate('/');
+      })
+      .catch((e) => {
+        //console.log(e);
+         Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Something went wrong!",
+                });
+      });
   };
-
-
 
   const links = (
     <>
@@ -107,8 +120,6 @@ const Navbar = () => {
       Login
     </Link>
   );
-
-
 
   return (
     <div className="bg-[#009368] shadow-md h-20 font-secondary">

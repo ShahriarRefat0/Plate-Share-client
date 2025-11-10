@@ -12,9 +12,10 @@ const Home = () => {
   return (
     <div>
       <Hero></Hero>
-      <OurMission></OurMission>
-      <HowItWorks></HowItWorks>
       <FeaturedFoods></FeaturedFoods>
+      <HowItWorks></HowItWorks>
+      <OurMission></OurMission>
+      
 
     </div>
   );
