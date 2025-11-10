@@ -64,7 +64,7 @@ const FoodCard = ({ food }) => {
         {/* View Details Button */}
         <div className="mt-4">
           <Link
-            to={`/food/${_id}`}
+            to={`/foods-details/${_id}`}
             className="block text-center bg-white border border-[#009368] hover:bg-[#009368] text-primary hover:text-white py-2 px-5 rounded-full font-semibold  transition duration-300"
           >
             View Details

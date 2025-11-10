@@ -68,7 +68,7 @@ const Hero = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.8 }}
-                  className="text-3xl md:text-5xl font-bold mb-4 text-[#009368] font-primary"
+                  className="text-3xl md:text-6xl font-bold mb-4 text-[#009368] font-primary"
                 >
                   {slide.title}
                 </motion.h2>

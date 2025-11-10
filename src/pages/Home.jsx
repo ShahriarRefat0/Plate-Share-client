@@ -7,13 +7,15 @@ import OurMission from '../Components/OurMission';
 import HowItWorks from '../Components/HowItWorks';
 import FeaturedFoods from '../Components/FeaturedFoods';
 
+
 const Home = () => {
   return (
     <div>
       <Hero></Hero>
       <OurMission></OurMission>
       <HowItWorks></HowItWorks>
-    <FeaturedFoods></FeaturedFoods>
+      <FeaturedFoods></FeaturedFoods>
+
     </div>
   );
 };

@@ -33,7 +33,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="w-11/12 mx-auto p-10 rounded-xl bg-[#dfeee4]">
+    <section className="w-11/12 mx-auto">
       <h2 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary">
         How It <span className="text-[#009368]">Works</span>
       </h2>
@@ -42,7 +42,7 @@ const HowItWorks = () => {
         3 easy steps.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center bg-[#dfeee4] p-10 rounded-2xl">
         {/* Left Side - Steps */}
         <div>
           {steps.map((step) => (
