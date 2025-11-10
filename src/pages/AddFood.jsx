@@ -1,13 +1,69 @@
-import React, { useState } from 'react';
-import { HiOutlineArrowLeft } from 'react-icons/hi2';
+import React, { use, useState } from "react";
+import { HiOutlineArrowLeft } from "react-icons/hi2";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { AuthContext } from "../authProvider/AuthProvider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const AddFood = () => {
-  const [expireData, setExpireDate] = useState(null)
+  const [expireDate, setExpireDate] = useState(null);
+  const { user } = use(AuthContext);
+  const navigate = useNavigate()
+  // console.log(user)
 
-  const handleAddFood=(e) => {
+  const handleAddFood = (e) => {
     e.preventDefault();
-    console.log('added' )
-  }
+    const form = e.target;
+    // console.log('added')
+
+    const newFood = {
+      food_name: form.food_name.value,
+      food_image: form.food_image.value,
+      food_quantity: parseInt(form.food_quantity.value),
+      pickup_location: form.pickup_location.value,
+      expire_date: expireDate.toISOString().split("T")[0],
+      additional_notes: form.additional_notes.value,
+      donator: {
+        name: form.donator_name.value,
+        email: form.donator_email.value,
+        image: user.photoURL,
+      },
+      food_status: "Available",
+    };
+
+    console.log(newFood);
+
+    fetch("http://localhost:3000/foods", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newFood),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.insertedId) {
+             Swal.fire({
+               title: "Food Added Successfully",
+               icon: "success",
+               draggable: true,
+             });
+          navigate('/')
+        }
+      })
+      .catch((e) => {
+        //console.log(e.message);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
+  };
+
   return (
     <div className="py-10 min-h-screen animated-bg">
       <div className="text-center">
@@ -24,10 +80,11 @@ const AddFood = () => {
             onSubmit={handleAddFood}
             className="bg-white w-full max-w-3xl shadow-2xl rounded-3xl p-8 md:p-10 space-y-6"
           >
-            <h3 className="ext-3xl md:text-5xl font-bold text-center  mb-4 font-primary">
+            <h3 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary">
               Add <span className="text-primary">Food</span>
             </h3>
             {/* Food Info Section */}
+
             <div className="space-y-4">
               <input
                 type="text"
@@ -53,11 +110,14 @@ const AddFood = () => {
                   className="input input-bordered w-full rounded-full bg-green-50"
                 />
 
-                <input
-                  type="date"
-                  name="expire_date"
+                <DatePicker
+                  selected={expireDate}
+                  onChange={(date) => setExpireDate(date)}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="Select Expire Date "
+                  className="input input-bordered w-full rounded-full bg-green-50 focus:ring-2 focus:ring-[#009368] focus:outline-none"
+                  minDate={new Date()} // ⏳ prevents picking past dates
                   required
-                  className="input input-bordered w-full rounded-full bg-green-50"
                 />
               </div>
 
@@ -85,6 +145,7 @@ const AddFood = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  defaultValue={user?.displayName}
                   name="donator_name"
                   placeholder="Donator Name"
                   required
@@ -94,6 +155,7 @@ const AddFood = () => {
                 <input
                   type="email"
                   name="donator_email"
+                  defaultValue={user?.email}
                   placeholder="Donator Email"
                   required
                   className="input input-bordered w-full rounded-full bg-green-50"
