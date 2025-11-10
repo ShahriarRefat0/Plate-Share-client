@@ -51,7 +51,7 @@ const Hero = () => {
               <img
                 src={slide.img}
                 alt={slide.title}
-                className="w-full h-[350px] md:h-[500px] object-cover text-5xl font-bold font-poppins text-gray-800"
+                className="w-full h-[450px] md:h-[600px] lg:h-[700px] object-cover text-5xl font-bold font-poppins text-gray-800"
               />
 
               {/* Overlay */}

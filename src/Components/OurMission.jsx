@@ -53,7 +53,7 @@ const OurMission = () => {
   return (
     <div className="my-15">
       <div className="text-center">
-        <h1 className="font-primary text-4xl font-semibold">
+        <h1 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary  ">
           OUR <span className="text-[#009368]">MISSION</span>
         </h1>
         <p className="font-secondary text-gray-600 mt-5">

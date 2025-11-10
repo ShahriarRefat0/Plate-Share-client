@@ -12,6 +12,29 @@
 .font-secondary{
   font-family: "Poppins", sans-serif;
 }
+
+@layer utilities {
+  /* bg */
+  .bg-primary{
+    @apply bg-[#009368]
+  }
+/* text */
+.text-primary {
+    @apply text-[#009368]
+  }
+
+
+  /* btn */
+  .card-btn {
+    @apply bg-[#ffff] text-[#009368] font-semibold px-6 py-2 rounded-lg hover:bg-[#009368] hover:text-[#ffff] border border-[#009368] transition-all duration-300;
+  }
+  .btn-primary{
+    @apply hover:bg-[#ffff] hover:text-[#009368] font-semibold px-6 py-2 rounded-lg  bg-[#009368] text-[#ffff] border border-[#009368] transition-all duration-300
+  }
+
+
+}
+
 /* 🚀 Animated shining gradient background */
 .animated-bg {
   background: linear-gradient(135deg, #a8e6cf, #dcedc8, #f8f9f7, #bdf7c1);

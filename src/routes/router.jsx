@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
 import MainLayouts from "../Layouts/MainLayouts";
 import Home from "../pages/Home";
 import AvailableFoods from "../pages/AvailableFoods";
@@ -19,10 +18,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+        
       },
       {
         path: "/available-foods",
         element: <AvailableFoods></AvailableFoods>,
+        loader: () => fetch("http://localhost:3000/foods?status=available"),
       },
       {
         path: "/add-food",
