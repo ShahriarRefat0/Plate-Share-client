@@ -16,10 +16,10 @@ import PrivateRoute from "./PrivetRoute";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayouts>Hello World</MainLayouts>,
+    element: <MainLayouts></MainLayouts>,
     children: [
       {
-        path: "/",
+        index:true,
         element: <Home></Home>,
       },
       {

@@ -3,7 +3,7 @@ import logo from "../../public/logo.png";
 import { GoEye } from "react-icons/go";
 import { FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../authProvider/AuthProvider";
 import Swal from "sweetalert2";
 
@@ -11,6 +11,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { user, loginWithGoogle, createUser } = use(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation()
   //console.log(user)
 
   const handleGoogleLogin = (e) => {
@@ -24,7 +25,7 @@ const Login = () => {
           icon: "success",
           draggable: true,
         });
-        navigate('/');
+        navigate(`${ location.state ? location.state : '/'}`);
       })
       .catch((e) => {
         //console.log(e.message);
@@ -49,7 +50,7 @@ const Login = () => {
           icon: "success",
           draggable: true,
         });
-        navigate("/");
+        navigate(`${location.state ? location.state : '/'}`);
       })
       .catch((e) => {
         // console.log(e);
