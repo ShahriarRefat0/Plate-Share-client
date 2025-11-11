@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { HiOutlineArrowLeft } from "react-icons/hi2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,6 +14,15 @@ const AddFood = () => {
   const { user } = use(AuthContext);
 
   // console.log(user)
+  useEffect(() => {
+    setLoading(true)
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 1500);
+    return ()=> clearTimeout(timer)
+  }, [])
+  
+
 
   const handleAddFood = (e) => {
     e.preventDefault();
@@ -36,7 +45,7 @@ setLoading(true)
       food_status: "Available",
     };
 
-    console.log(newFood);
+    //console.log(newFood);
 
     fetch("http://localhost:3000/foods", {
       method: "POST",

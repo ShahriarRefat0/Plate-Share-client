@@ -3,6 +3,7 @@ import { AuthContext } from "../authProvider/AuthProvider";
 import Swal from "sweetalert2";
 // import { useNavigate } from 'react-router';
 import DatePicker from "react-datepicker";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 
 const ManageMyFoods = () => {
@@ -13,6 +14,7 @@ const ManageMyFoods = () => {
   // const navigate = useNavigate()
   const [expireDate, setExpireDate] = useState();
   const [selectedFood, setSelectedFood] = useState(null)
+  const [loading, setLoading] = useState(false)
 
 
 
@@ -102,6 +104,7 @@ const ManageMyFoods = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (!user?.email) return;
 
     fetch(`http://localhost:3000/my-foods?email=${user.email}`)
@@ -110,7 +113,8 @@ const ManageMyFoods = () => {
         //console.log(data)
         setMyFoods(data);
       })
-      .catch((e) => console.log("Error:", e));
+      .catch((e) => console.log("Error:", e))
+    .finally(()=> setLoading(false))
   }, [user?.email]);
 
   //modal open-close
@@ -121,6 +125,9 @@ const ManageMyFoods = () => {
   const handleFoodModalClose = () => {
     foodModalRef.current.close();
   };
+
+
+  if (loading) return <LoadingSpinner></LoadingSpinner>
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-10 bg-white">
