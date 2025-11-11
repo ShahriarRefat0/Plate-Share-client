@@ -1,100 +1,127 @@
-import React, { use, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '../authProvider/AuthProvider';
-import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router';
-import DatePicker from 'react-datepicker';
+import React, { use, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../authProvider/AuthProvider";
+import Swal from "sweetalert2";
+// import { useNavigate } from 'react-router';
+import DatePicker from "react-datepicker";
+
 
 const ManageMyFoods = () => {
-  const { user } = use(AuthContext)
-  const foodModalRef = useRef(null)
-  const [myFoods, setMyFoods] = useState([])
-// const navigate = useNavigate()
-const [expireDate, setExpireDate] = useState();
+  const { user } = use(AuthContext);
+
+  const foodModalRef = useRef(null);
+  const [myFoods, setMyFoods] = useState([]);
+  // const navigate = useNavigate()
+  const [expireDate, setExpireDate] = useState();
+  const [selectedFood, setSelectedFood] = useState(null)
 
 
-   console.log(user?.email)
-  
-  
 
- const handleUpdateFood = (e) => {
-   e.preventDefault();
-  //  const form = e.target;
-   // console.log('added')
-
-  //  const newFood = {
-  //    food_name: form.food_name.value,
-  //    food_image: form.food_image.value,
-  //    food_quantity: parseInt(form.food_quantity.value),
-  //    pickup_location: form.pickup_location.value,
-  //    expire_date: expireDate.toISOString().split("T")[0],
-  //    additional_notes: form.additional_notes.value,
-  //    donator: {
-  //      name: form.donator_name.value,
-  //      email: form.donator_email.value,
-  //      image: user.photoURL,
-  //    },
-  //    food_status: "Available",
-  //  };
-
-  // console.log(newFood);
-
-  //  fetch(`http://localhost:3000/update-food?email=${user?.email}`, {
-  //    method: "PUT",
-  //    headers: {
-  //      "content-type": "application/json",
-  //    },
-  //    body: JSON.stringify(newFood),
-  //  })
-  //    .then((res) => res.json())
-  //    .then((data) => {
-  //      // console.log(data);
-  //      if (data.insertedId) {
-  //        Swal.fire({
-  //          title: "Food Update Successfully",
-  //          icon: "success",
-  //          draggable: true,
-  //        });
-  //        // form.reset()
-  //        navigate("/");
-  //      }
-  //    })
-  //    .catch((e) => {
-  //      //console.log(e.message);
-  //      Swal.fire({
-  //        icon: "error",
-  //        title: "Oops...",
-  //        text: "Something went wrong!",
-  //      });
-  //    });
- };
-
-  
-  
-  
-useEffect(() => {
-  if (!user?.email) return;
-
-  fetch(`http://localhost:3000/manage-foods?email=${user.email}`)
-    .then((res) => res.json())
-    .then((data) => {
-      //console.log(data)
-      setMyFoods(data)
+  const handleFoodDelete = (food) => {
+    // console.log("id-delete",food?._id)
+    fetch(`http://localhost:3000/delete-food/${food?._id}`, {
+      method: "DELETE"
+    }).then(res => res.json())
+      .then(data => {
+        //console.log('after delete', data)
+        if (data.deletedCount) {
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#009368",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your food has been deleted.",
+                icon: "success",
+              });
+            }
+          });
+          setMyFoods((prev) => prev.filter(f => f._id !== food._id))
+        }
     })
-    .catch((e) => console.log("Error:", e));
-}, [user?.email]);
-  
+  };
+
+
+  const handleUpdateFood = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const updateFood = {
+      food_name: form.food_name.value,
+      food_image: form.food_image.value,
+      food_quantity: parseInt(form.food_quantity.value),
+      pickup_location: form.pickup_location.value,
+      expire_date: expireDate
+        ? expireDate.toISOString().split("T")[0]
+        : form.expire_date.value,
+      additional_notes: form.additional_notes.value,
+      donator: {
+        name: form.donator_name.value,
+        email: form.donator_email.value,
+        image: user.photoURL,
+      },
+      food_status: "Available",
+    };
+
+    // console.log("update food",updateFood);
+
+    fetch(`http://localhost:3000/update-food/${selectedFood?._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateFood),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          Swal.fire({
+            title: "Food Update Successfully",
+            icon: "success",
+            draggable: true,
+          });
+          form.reset()
+          foodModalRef.current.close();
+          setMyFoods((preFood)=> preFood.map((food)=> food._id === selectedFood._id ? {...food, ...updateFood} : food))
+        }
+      })
+      .catch((e) => {
+        console.log(e.message);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
+  };
+
+  useEffect(() => {
+    if (!user?.email) return;
+
+    fetch(`http://localhost:3000/my-foods?email=${user.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        //console.log(data)
+        setMyFoods(data);
+      })
+      .catch((e) => console.log("Error:", e));
+  }, [user?.email]);
+
   //modal open-close
   const handleFoodModalOpen = () => {
-    foodModalRef.current.showModal()
-  } 
+    foodModalRef.current.showModal();
+  };
 
   const handleFoodModalClose = () => {
-    foodModalRef.current.close()
-  }
-  
+    foodModalRef.current.close();
+  };
 
-  // console.log(myFoods);
-  
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-10 bg-white">
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
@@ -139,13 +166,16 @@ useEffect(() => {
 
                   <th className="w-full flex justify-center gap-6">
                     <button
-                      onClick={handleFoodModalOpen}
+                      onClick={() => {
+                        setSelectedFood(food);
+                        handleFoodModalOpen();
+                      }}
                       className="btn btn-soft btn-success hover:text-white rounded-3xl"
                     >
                       Update
                     </button>
 
-                    <button className="btn btn-soft btn-error hover:text-white rounded-3xl">
+                    <button onClick={()=>handleFoodDelete(food)} className="btn btn-soft btn-error hover:text-white rounded-3xl">
                       Delete
                     </button>
                   </th>
@@ -174,6 +204,7 @@ useEffect(() => {
 
               <div className="space-y-2">
                 <input
+                  defaultValue={selectedFood?.food_name}
                   type="text"
                   name="food_name"
                   placeholder="Food Name"
@@ -183,6 +214,7 @@ useEffect(() => {
                 />
 
                 <input
+                  defaultValue={selectedFood?.food_image}
                   type="text"
                   name="food_image"
                   placeholder="Food Image URL"
@@ -192,6 +224,7 @@ useEffect(() => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <input
                     type="number"
+                    defaultValue={selectedFood?.food_quantity}
                     name="food_quantity"
                     placeholder="Food Quantity (e.g., 3)"
                     required
@@ -202,7 +235,7 @@ useEffect(() => {
                     selected={expireDate}
                     onChange={(date) => setExpireDate(date)}
                     dateFormat="yyyy-MM-dd"
-                    placeholderText="Select Expire Date "
+                    placeholderText='Select Expire Date'
                     className="input input-bordered w-full rounded-full bg-green-50 focus:ring-2 focus:ring-[#009368] focus:outline-none"
                     minDate={new Date()} // ⏳ prevents picking past dates
                     required
@@ -211,6 +244,7 @@ useEffect(() => {
 
                 <input
                   type="text"
+                  defaultValue={selectedFood?.pickup_location}
                   name="pickup_location"
                   placeholder="Pickup Location"
                   required
@@ -218,6 +252,7 @@ useEffect(() => {
                 />
 
                 <textarea
+                  defaultValue={selectedFood?.additional_notes}
                   name="additional_notes"
                   placeholder="Additional Notes"
                   rows="3"

@@ -4,21 +4,24 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../authProvider/AuthProvider";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 
 const AddFood = () => {
+  const [loading, setLoading] = useState(false)
   const [expireDate, setExpireDate] = useState(null);
   const { user } = use(AuthContext);
-  const navigate = useNavigate()
+
   // console.log(user)
 
   const handleAddFood = (e) => {
     e.preventDefault();
     const form = e.target;
     // console.log('added')
-
+setLoading(true)
     const newFood = {
+ 
       food_name: form.food_name.value,
       food_image: form.food_image.value,
       food_quantity: parseInt(form.food_quantity.value),
@@ -52,7 +55,7 @@ const AddFood = () => {
                draggable: true,
              });
            form.reset()
-          navigate('/')
+
         }
       })
       .catch((e) => {
@@ -62,10 +65,11 @@ const AddFood = () => {
           title: "Oops...",
           text: "Something went wrong!",
         });
-      });
+      })
+      .finally(()=>setLoading(false));
   };
 
-  
+  if(loading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="py-10 min-h-screen animated-bg">

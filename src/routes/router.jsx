@@ -19,13 +19,13 @@ const router = createBrowserRouter([
     element: <MainLayouts></MainLayouts>,
     children: [
       {
-        index:true,
+        index: true,
         element: <Home></Home>,
       },
       {
         path: "/available-foods",
         element: <AvailableFoods></AvailableFoods>,
-        loader: () => fetch("http://localhost:3000/foods?status=available"),
+       
       },
       {
         path: "/add-food",
@@ -45,19 +45,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-food-requests",
-        element: <MyFoodRequests></MyFoodRequests>,
+        element: (
+          <PrivateRoute>
+            <MyFoodRequests></MyFoodRequests>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/manage-my-foods",
-        element: <PrivateRoute>
-          <ManageMyFoods></ManageMyFoods>,
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <ManageMyFoods></ManageMyFoods>,
+          </PrivateRoute>
+        ),
       },
       {
         path: "/foods-details/:id",
-        element: <PrivateRoute>
-          <FoodsDetails></FoodsDetails>,
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <FoodsDetails></FoodsDetails>,
+          </PrivateRoute>
+        ),
       },
     ],
   },
