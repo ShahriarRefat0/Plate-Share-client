@@ -178,7 +178,7 @@ const navigate = useNavigate()
 
         {/* RIGHT SIDE BUTTONS */}
         <div className="navbar-end mx-w-30 gap-5">
-          <div className="lg:flex gap-4">{showBtns}</div>
+          <div className="lg:flex gap-4">{user ? showBtns : " "}</div>
         </div>
       </div>
     </div>

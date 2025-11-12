@@ -139,19 +139,24 @@ const ManageMyFoods = () => {
   if (loading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-10 bg-white">
+    <div className="min-h-screen w-11/12 mx-auto flex flex-col items-center justify-start py-10 bg-white">
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
         Manage <span className="text-primary ">Foods</span>
       </h1>
-
+      { myFoods ?
+        (
       <div className="w-full flex justify-center">
-        <div className="overflow-x-auto shadow-md rounded-2xl w-full md:w-5/6 lg:w-3/4">
+        <div className="overflow-x-auto shadow-md rounded-2xl w-full">
           <table className="table w-full text-center">
             {/* head */}
             <thead className="bg-[#009368]/10 text-[#009368] font-semibold">
               <tr>
                 <th>Food</th>
+                <th>Quantity</th>
+                <th>Location</th>
+                <th>Expire Date</th>
                 <th>Status</th>
+                <th>Note</th>
                 <th>Update / Delete</th>
               </tr>
             </thead>
@@ -162,7 +167,7 @@ const ManageMyFoods = () => {
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar">
-                        <div className="h-15 w-25 rounded-md">
+                        <div className="h-15 w-20 rounded-md">
                           <img
                             src={food?.food_image}
                             alt="Avatar Tailwind CSS Component"
@@ -174,13 +179,17 @@ const ManageMyFoods = () => {
                       </div>
                     </div>
                   </td>
+                  <td>{food?.food_quantity}</td>
+                  <td>{food?.pickup_location}</td>
+                  <td>{food?.expire_date}</td>
+
                   <td>
                     <div className="badge badge-success text-white">
                       {food?.food_status}
                     </div>
                   </td>
-
-                  <th className="w-full flex justify-center gap-6">
+                  <td>{food?.additional_notes}</td>
+                  <th className="w-full flex justify-center gap-3">
                     <button
                       onClick={() => {
                         setSelectedFood(food);
@@ -204,7 +213,8 @@ const ManageMyFoods = () => {
           </table>
         </div>
       </div>
-
+) :'nod request availabel'
+}
       {/* modal */}
       <dialog ref={foodModalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">

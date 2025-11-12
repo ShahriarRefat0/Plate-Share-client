@@ -25,17 +25,16 @@ const FoodsDetails = () => {
     donator: { name, email, image } = {},
   } = foodDetails || {};
 
-
   const handleRequestStatus = (id, foodId, status) => {
     fetch(`http://localhost:3000/update-request/${id}`, {
       method: "PUT",
       headers: {
-        'content-type' : 'application/json'
+        "content-type": "application/json",
       },
-      body: JSON.stringify({status, foodId})
+      body: JSON.stringify({ status, foodId }),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.modifiedCount > 0) {
           Swal.fire({
             title: `Request ${status}!`,
@@ -50,11 +49,8 @@ const FoodsDetails = () => {
             setFoodDetails((pre) => ({ ...pre, food_status: "Donated" }));
           }
         }
-    })
-    
-}
-
-
+      });
+  };
 
   const handleReqFood = (e) => {
     e.preventDefault();
@@ -70,6 +66,7 @@ const FoodsDetails = () => {
       req_status: "Pending",
       req_foodName: food_name,
       donator_email: foodDetails.donator.email,
+      req_foodImg: foodDetails.food_image,
     };
 
     // console.log(reqInfo)
@@ -99,7 +96,6 @@ const FoodsDetails = () => {
       });
   };
 
-
   useEffect(() => {
     if (!id || !user?.email) return;
     fetch(
@@ -107,14 +103,13 @@ const FoodsDetails = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("foods req", data);
+       // console.log("foods req", data);
         setFoodRequests(data);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        // console.log(e);
+      });
   }, [id, user?.email]);
-
-
-
 
   useEffect(() => {
     fetch(`http://localhost:3000/foods/${id}`)
@@ -284,102 +279,113 @@ const FoodsDetails = () => {
       </div>
 
       {/* request table */}
-      <div className="mt-35">
-        <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
-          Requests For<span className="text-primary "> Food</span>
-        </h1>
+      {!foodRequests ? (
+        <div className="mt-35">
+          <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
+            Requests For<span className="text-primary "> Food</span>
+          </h1>
 
-        <div className="w-full flex justify-center ">
-          <div className="overflow-x-auto shadow-md rounded-2xl w-full">
-            <table className="table w-full text-center">
-              {/* head */}
-              <thead className="bg-[#009368]/10 text-[#009368] font-semibold">
-                <tr>
-                  <th>Requester</th>
-                  <th>Contact Info</th>
-                  <th>Food Status</th>
-                  <th>Note</th>
-                  <th>Request status</th>
-                </tr>
-              </thead>
+          <div className="w-full flex justify-center ">
+            <div className="overflow-x-auto shadow-md rounded-2xl w-full">
+              <table className="table w-full text-center">
+                {/* head */}
+                <thead className="bg-[#009368]/10 text-[#009368] font-semibold">
+                  <tr>
+                    <th>Requester</th>
+                    <th>Contact Info</th>
+                    <th>Food Status</th>
+                    <th>Note</th>
+                    <th>Request status</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {/* row 1 */}
-                {foodRequests.map((request) => (
-                  <tr key={request?._id}>
-                    <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="h-12 w-12 border-2 border-green-600  rounded-full">
-                            <img
-                              src={request?.req_userPhoto}
-                              alt="Avatar Tailwind CSS Component"
-                            />
+                <tbody>
+                  {/* row 1 */}
+                  {foodRequests.map((request) => (
+                    <tr key={request?._id}>
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <div className="avatar">
+                            <div className="h-12 w-12 border-2 border-green-600  rounded-full">
+                              <img
+                                src={request?.req_userPhoto}
+                                alt="Avatar Tailwind CSS Component"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <p className="font-bold text-gray-600">
+                              {request?.req_name}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              {request?.req_email}
+                            </p>
                           </div>
                         </div>
-                        <div>
-                          <p className="font-bold text-gray-600">
-                            {request?.req_name}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            {request?.req_email}
-                          </p>
+                      </td>
+                      <td>
+                        <div className="text-sm text-gray-600">
+                          <p> {request?.req_contact}</p>
+                          <p>{request?.req_location}</p>
                         </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="text-sm text-gray-600">
-                        <p> {request?.req_contact}</p>
-                        <p>{request?.req_location}</p>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="badge badge-warning text-white">
-                        {request?.req_status}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="text-sm text-gray-600">
-                        {request?.req_message}
-                      </div>
-                    </td>
-                    <th className="w-full flex justify-center gap-6">
-                      <button
-                        onClick={() => {
-                          handleRequestStatus(
-                            request._id,
-                            request.req_foodId,
-                            "Accepted"
-                          );
-                        }}
-                        disabled={request.req_status !== "Pending"}
-                        className="btn btn-soft btn-success hover:text-white rounded-3xl"
-                      >
-                        {request.req_status === "Accepted" ? "Accept" : "Request Accepted"}
-                      </button>
+                      </td>
+                      <td>
+                        <div className="badge badge-warning text-white">
+                          {request?.req_status}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="text-sm text-gray-600">
+                          {request?.req_message}
+                        </div>
+                      </td>
+                      <th className="w-full flex justify-center gap-6">
+                        <button
+                          onClick={() => {
+                            handleRequestStatus(
+                              request._id,
+                              request.req_foodId,
+                              "Accepted"
+                            );
+                          }}
+                          disabled={request.req_status === "Accepted"}
+                          className={`btn btn-soft btn-success hover:text-white rounded-3xl ${
+                            request.req_status !== "Accepted" ? " hidden" : ""
+                          }`}
+                        >
+                          {request.req_status === "Accepted"
+                            ? "Request Accepted"
+                            : "Accept"}
+                        </button>
 
-                      <button
-                        onClick={() =>
-                          handleRequestStatus(
-                            request._id,
-                            request.req_foodId,
-                            "Rejected"
-                          )
-                        }
-                        className={`btn btn-soft btn-error hover:text-white rounded-3xl ${
-                          request.req_status !== "Pending" ? "hidden " : ""
-                        }`}
-                      >
-                        Reject
-                      </button>
-                    </th>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                        <button
+                          onClick={() =>
+                            handleRequestStatus(
+                              request._id,
+                              request.req_foodId,
+                              "Rejected"
+                            )
+                          }
+                          disabled={request.req_status !== "Accepted"}
+                          className={`btn btn-soft btn-error hover:text-white rounded-3xl ${
+                            request.req_status !== "Accepted" ? " " : "hidden"
+                          }`}
+                        >
+                          {request.req_status !== "Accepted"
+                            ? "Reject"
+                            : "Request Rejected"}
+                        </button>
+                      </th>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        " "
+      )}
     </div>
   );
 };
