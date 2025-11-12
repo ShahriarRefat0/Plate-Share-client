@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
-
 const ManageMyFoods = () => {
   const { user } = use(AuthContext);
 
@@ -13,41 +12,48 @@ const ManageMyFoods = () => {
   const [myFoods, setMyFoods] = useState([]);
   // const navigate = useNavigate()
   const [expireDate, setExpireDate] = useState();
-  const [selectedFood, setSelectedFood] = useState(null)
-  const [loading, setLoading] = useState(false)
-
-
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleFoodDelete = (food) => {
     // console.log("id-delete",food?._id)
-    fetch(`http://localhost:3000/delete-food/${food?._id}`, {
-      method: "DELETE"
-    }).then(res => res.json())
-      .then(data => {
-        //console.log('after delete', data)
-        if (data.deletedCount) {
-          Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#009368",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your food has been deleted.",
-                icon: "success",
-              });
-            }
-          });
-          setMyFoods((prev) => prev.filter(f => f._id !== food._id))
-        }
-    })
-  };
 
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#009368",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/delete-food/${food?._id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            //console.log('after delete', data)
+            if (data.deletedCount) {
+                   setMyFoods((prev) => prev.filter((f) => f._id !== food._id));
+               Swal.fire({
+                 title: "Deleted!",
+                 text: "Your food has been deleted.",
+                 icon: "success",
+               });
+            }
+          })
+          .catch(e => {
+             Swal.fire({
+               title: "Error!",
+               text: "Something went wrong while deleting.",
+               icon: "error",
+             });
+            console.log(e)
+          });
+      }
+    });
+  };
 
   const handleUpdateFood = (e) => {
     e.preventDefault();
@@ -88,9 +94,13 @@ const ManageMyFoods = () => {
             icon: "success",
             draggable: true,
           });
-          form.reset()
+          form.reset();
           foodModalRef.current.close();
-          setMyFoods((preFood)=> preFood.map((food)=> food._id === selectedFood._id ? {...food, ...updateFood} : food))
+          setMyFoods((preFood) =>
+            preFood.map((food) =>
+              food._id === selectedFood._id ? { ...food, ...updateFood } : food
+            )
+          );
         }
       })
       .catch((e) => {
@@ -114,7 +124,7 @@ const ManageMyFoods = () => {
         setMyFoods(data);
       })
       .catch((e) => console.log("Error:", e))
-    .finally(()=> setLoading(false))
+      .finally(() => setLoading(false));
   }, [user?.email]);
 
   //modal open-close
@@ -126,8 +136,7 @@ const ManageMyFoods = () => {
     foodModalRef.current.close();
   };
 
-
-  if (loading) return <LoadingSpinner></LoadingSpinner>
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-10 bg-white">
@@ -182,7 +191,10 @@ const ManageMyFoods = () => {
                       Update
                     </button>
 
-                    <button onClick={()=>handleFoodDelete(food)} className="btn btn-soft btn-error hover:text-white rounded-3xl">
+                    <button
+                      onClick={() => handleFoodDelete(food)}
+                      className="btn btn-soft btn-error hover:text-white rounded-3xl"
+                    >
                       Delete
                     </button>
                   </th>
@@ -242,7 +254,7 @@ const ManageMyFoods = () => {
                     selected={expireDate}
                     onChange={(date) => setExpireDate(date)}
                     dateFormat="yyyy-MM-dd"
-                    placeholderText='Select Expire Date'
+                    placeholderText="Select Expire Date"
                     className="input input-bordered w-full rounded-full bg-green-50 focus:ring-2 focus:ring-[#009368] focus:outline-none"
                     minDate={new Date()} // ⏳ prevents picking past dates
                     required

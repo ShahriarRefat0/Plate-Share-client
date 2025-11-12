@@ -10,8 +10,8 @@ const FoodsDetails = () => {
   const { id } = useParams();
   const [foodDetails, setFoodDetails] = useState();
   const reqModalRef = useRef();
-  const { user } = use(AuthContext)
-  const [foodRequests, setFoodRequests] =useState([])
+  const { user } = use(AuthContext);
+  const [foodRequests, setFoodRequests] = useState([]);
   // console.log(id)
   const {
     food_name,
@@ -21,21 +21,10 @@ const FoodsDetails = () => {
     expire_date,
     additional_notes,
     food_status,
-  
+
     donator: { name, email, image } = {},
   } = foodDetails || {};
 
-  
-  useEffect(() => {
-    if (!id) return;
-      fetch(`http://localhost:3000/food-request?food_Id=${id}`,)
-        .then(res => res.json())
-        .then(data => {
-          console.log('food req',data)
-          setFoodRequests(data);
-        })
-    .catch(e => console.log(e))
-    },[id])
 
 
   const handleReqFood = (e) => {
@@ -49,7 +38,9 @@ const FoodsDetails = () => {
       req_email: user?.email,
       req_userPhoto: user?.photoURL,
       req_foodId: id,
-      req_status: "Pending"
+      req_status: "Pending",
+      req_foodName: food_name,
+      donator_email: foodDetails.donator.email,
     };
 
     // console.log(reqInfo)
@@ -65,32 +56,36 @@ const FoodsDetails = () => {
       .then((data) => {
         console.log(data);
         if (data.insertedId) {
-           Swal.fire({
-                      title: "Are you sure?",
-                      text: "You won't be able to revert this!",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#009368",
-                      cancelButtonColor: "#d33",
-                      confirmButtonText: "Confirm",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        Swal.fire({
-                          title: "Send done",
-                          text: "Food request send successfully.",
-                          icon: "success",
-                        });
-                      }
-                    });
-          form.reset()
+          Swal.fire({
+            title: "Sed Done",
+            text: "Food request send successfully.",
+            icon: "success",
+          });
+          form.reset();
         }
         reqModalRef.current.close();
       })
       .catch((e) => {
         console.log(e.message);
       });
-
   };
+
+
+  useEffect(() => {
+    if (!id || !user?.email) return;
+    fetch(
+      `http://localhost:3000/food-request?req_foodId=${id}&donator_email=${user?.email}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("foods req", data);
+        setFoodRequests(data);
+      })
+      .catch((e) => console.log(e));
+  }, [id, user?.email]);
+
+
+
 
   useEffect(() => {
     fetch(`http://localhost:3000/foods/${id}`)
@@ -109,7 +104,7 @@ const FoodsDetails = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <div className="max-w-7xl mx-auto px-4 py-10 md:py-16">
       <Link
         to="/"
         className="mb-5 flex gap-3 items-center text-primary cursor-pointer"
@@ -256,65 +251,88 @@ const FoodsDetails = () => {
       </div>
 
       {/* request table */}
-      <div className="w-full flex justify-center">
-        <div className="overflow-x-auto shadow-md rounded-2xl w-full md:w-5/6 lg:w-3/4">
-          <table className="table w-full text-center">
-            {/* head */}
-            <thead className="bg-[#009368]/10 text-[#009368] font-semibold">
-              <tr>
-                <th>Food</th>
-                <th>Status</th>
-                <th>Update / Delete</th>
-              </tr>
-            </thead>
+      <div className="mt-35">
+        <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
+          Requests For<span className="text-primary "> Food</span>
+        </h1>
 
-            <tbody>
-              {/* row 1 */}
-              {/* {foodRequests.map((request) => (
-                <tr key={request?._id}>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="h-15 w-25 rounded-md">
-                          <img
-                            src={request?.food_image}
-                            alt="Avatar Tailwind CSS Component"
-                          />
+        <div className="w-full flex justify-center ">
+          <div className="overflow-x-auto shadow-md rounded-2xl w-full">
+            <table className="table w-full text-center">
+              {/* head */}
+              <thead className="bg-[#009368]/10 text-[#009368] font-semibold">
+                <tr>
+                  <th>Requester</th>
+                  <th>Contact Info</th>
+                  <th>Food Status</th>
+                  <th>Note</th>
+                  <th>Request status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {/* row 1 */}
+                {foodRequests.map((request) => (
+                  <tr key={request?._id}>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="h-12 w-12 border-2 border-green-600  rounded-full">
+                            <img
+                              src={request?.req_userPhoto}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-600">
+                            {request?.req_name}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Email: {request?.req_email}
+                          </p>
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{food?.food_name}</div>
+                    </td>
+                    <td>
+                      <div className="text-sm text-gray-600">
+                        <p>Phone: {request?.req_contact}</p>
+                        <p>Add: {request?.req_location}</p>
                       </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="badge badge-success text-white">
-                      {food?.food_status}
-                    </div>
-                  </td>
+                    </td>
+                    <td>
+                      <div className="badge badge-warning text-white">
+                        {request?.req_status}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="text-sm text-gray-600">
+                        {request?.req_message}
+                      </div>
+                    </td>
+                    <th className="w-full flex justify-center gap-6">
+                      <button
+                        // onClick={() => {
+                        //   setSelectedFood(food);
+                        //   handleFoodModalOpen();
+                        // }}
+                        className="btn btn-soft btn-success hover:text-white rounded-3xl"
+                      >
+                        Accept
+                      </button>
 
-                  <th className="w-full flex justify-center gap-6">
-                    <button
-                      // onClick={() => {
-                      //   setSelectedFood(food);
-                      //   handleFoodModalOpen();
-                      // }}
-                      className="btn btn-soft btn-success hover:text-white rounded-3xl"
-                    >
-                      Update
-                    </button>
-
-                    <button
-                      // onClick={() => handleFoodDelete(food)}
-                      className="btn btn-soft btn-error hover:text-white rounded-3xl"
-                    >
-                      Delete
-                    </button>
-                  </th>
-                </tr>
-              ))} */}
-            </tbody>
-          </table>
+                      <button
+                        // onClick={() => handleFoodDelete(food)}
+                        className="btn btn-soft btn-error hover:text-white rounded-3xl"
+                      >
+                        Reject
+                      </button>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
