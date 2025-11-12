@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../authProvider/AuthProvider";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +20,7 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     const photoURL = form.photoURL.value;
-    console.log(displayName, email, password, photoURL);
+    //console.log(displayName, email, password, photoURL);
 
     //const newUser = {name, email, password, photoURL}
 
@@ -28,17 +29,39 @@ const Register = () => {
         updateUser(displayName, photoURL)
         .then(() => {
           const user = res.user;
+          //console.log(user)
           setUser(user);
-          toast.success("Register Successfully");
+        Swal.fire({
+          title: `Welcome, ${displayName}!`,
+          text: "Your account has been created successfully.",
+          icon: "success",
+          draggable: true,
+          confirmButtonColor: "#009368",
+          background: "#fff",
+          confirmButtonText: "Go to Dashboard",
+        });
           navigate("/");
         })
           .catch(() => {
-            toast.error("Oops! Something went wrong");
+           toast.error("Profile update failed.");
+           Swal.fire({
+             title: "Oops!",
+             text: "Something went wrong while updating your profile.",
+             icon: "error",
+             confirmButtonColor: "#d33",
+             draggable: true,
+           });
           });
       })
       .catch((e) => {
-        console.log(e)
-         toast.error("Oops! Something went wrong")
+       // console.log(e)
+        Swal.fire({
+          title: "Registration Failed!",
+          text: "Oops! Something went wrong.",
+          icon: "error",
+          confirmButtonColor: "#d33",
+          draggable: true,
+        });
       });
   };
 

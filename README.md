@@ -1,16 +1,114 @@
-# React + Vite
+# 🍽️ PlateShare — Community Food Sharing Platform  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 🌐 Live Website  
+🔗 [Visit PlateShare Live Site](#)  
+🔗 [Server API (Vercel)](#)  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📖 Project Overview  
 
-## React Compiler
+**PlateShare** is a full-stack MERN application that connects communities through food sharing. It allows users to donate surplus food and helps others find and request meals — reducing food waste while supporting those in need.  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This platform promotes sustainability, generosity, and a sense of community.  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Key Features  
+
+- **Food Request System:** Registered users can request food, and donors can accept or reject requests.  
+- **Food Sharing System:** Users can donate food with full details including quantity, location, and expiry date.  
+- **Firebase Authentication:** Email-password and Google login system with secure route protection.  
+- **Private Dashboard:** Manage, update, or delete donated food items from your account.  
+- **Interactive Alerts:** SweetAlert2 and React Hot Toast for success/error messages.  
+- **Smooth Animations:** Implemented AOS animations for a modern interface.  
+- **Fully Responsive:** Optimized layout for mobile, tablet, and desktop devices.  
+
+---
+
+## 🧑‍💻 Technologies Used  
+
+### **Frontend**
+- React.js (Vite)
+- React Router DOM
+- Tailwind CSS + DaisyUI
+- Firebase Authentication
+- Context API
+- SweetAlert2 (draggable alerts)
+- React Hot Toast
+- AOS (Animate on Scroll)
+- Framer Motion 
+
+### **Backend**
+- Node.js + Express.js
+- MongoDB Atlas
+- Firebase Admin SDK
+- dotenv, cors
+
+---
+
+## 🗂️ Project Structure  
+  
+src/  
+│  
+├── assets/ # Images, logos, icons  
+├── components/ # Reusable UI components  
+├── layouts/ # MainLayouts (Navbar, Footer, Outlet)  
+├── pages/ # Page components  
+│ ├── Home.jsx  
+│ ├── AvailableFoods.jsx  
+│ ├── AddFood.jsx  
+│ ├── ManageMyFoods.jsx  
+│ ├── MyFoodRequests.jsx  
+│ ├── FoodDetails.jsx  
+│ └── ErrorPage.jsx  
+│  
+├── routes/ # Route configuration  
+├── authProvider/ # Firebase Auth context  
+└── main.jsx # App entry point  
+
+---
+
+
+---
+
+## ⚙️ Core Functionalities  
+
+### 🥣 Add Food  
+Users can add new food items (image hosted via imgbb) including details like:
+- Food name, quantity, pickup location, expire date, notes  
+- Auto-filled donator info (from logged-in Firebase user)  
+
+### 🍛 Manage My Foods  
+Users can:
+- **Update** existing foods  
+- **Delete** foods (SweetAlert2 confirmation)  
+
+### 🍽️ Available Foods  
+Public route that lists all available foods with:
+- Image, donor info, quantity, location, expiry date  
+- “View Details” button (private route access)  
+
+### 📩 Food Request System  
+- Any logged-in user can request food with a note, contact, and location.  
+- Donors can **Accept** or **Reject** requests.  
+- Request status updates dynamically in MongoDB.  
+
+### 🔑 Authentication  
+- Firebase email/password + Google login  
+- Keeps users logged in after reload  
+- Redirects back to the intended route after login  
+
+### ❌ Error Handling  
+- Custom 404 page with animation and “Go Back Home” button  
+- SweetAlert2 for all success/error messages  
+
+---
+
+## 🏆 Developer
+
+**👤 Shahariar Refat**  
+📧 [shahariarrefat@gmail.com](mailto:shahariarrefat@gmail.com)  
+🌐 [GitHub Profile](https://github.com/ShahriarRefat0)
+
+

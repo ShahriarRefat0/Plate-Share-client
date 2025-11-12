@@ -18,7 +18,7 @@ const navigate = useNavigate()
       .then((res) => {
         //console.log("user logout", res)
         Swal.fire({
-          title: "Login Successful",
+          title: "LogOut Successful",
           icon: "success",
           draggable: true,
         });
@@ -71,18 +71,13 @@ const navigate = useNavigate()
 
       <ul
         tabIndex={-1}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box absolute right-0 z-[60]mt-3 w-52 p-2 shadow"
       >
         <div className="pb-3 border-b border-b-gray-200">
           <li className="text-sm font-semibold">{user.displayName}</li>
           <li className="text-xs">{user.email}</li>
         </div>
 
-        <li className="mt-3">
-          <Link to="/profile">
-            <FaUser /> Profile
-          </Link>
-        </li>
         <li>
           <Link to="/add-food">
             <MdOutlineLibraryAdd />
@@ -178,7 +173,7 @@ const navigate = useNavigate()
 
         {/* RIGHT SIDE BUTTONS */}
         <div className="navbar-end mx-w-30 gap-5">
-          <div className="lg:flex gap-4">{user ? showBtns : " "}</div>
+          <div className="lg:flex gap-4">{showBtns}</div>
         </div>
       </div>
     </div>

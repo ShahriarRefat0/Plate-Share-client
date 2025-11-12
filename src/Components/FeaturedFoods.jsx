@@ -19,7 +19,7 @@ const FeaturedFoods = () => {
 
   return (
     <div className="w-11/12  mx-auto my-20">
-      <div>
+      <div data-aos="fade-down">
         <h1 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary">
           Featured <span className="text-primary">Foods</span>
         </h1>
@@ -29,7 +29,10 @@ const FeaturedFoods = () => {
           <FoodCard key={food._id} food={food}></FoodCard>
         ))}
       </div>
-      <div className="flex items-center justify-center my-10">
+      <div
+        data-aos="zoom-in-down"
+        className="flex items-center justify-center my-10"
+      >
         <Link
           to="/available-foods"
           className="btn-primary w-60 flex items-center justify-center gap-5"

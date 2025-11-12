@@ -34,10 +34,16 @@ const HowItWorks = () => {
 
   return (
     <section className="w-11/12 mx-auto my-20">
-      <h2 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary">
+      <h2
+        data-aos="fade-down"
+        className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary"
+      >
         How It <span className="text-[#009368]">Works</span>
       </h2>
-      <p className="text-center text-gray-600 text-base md:text-lg max-w-3xl mx-auto mb-10 font-secondary">
+      <p
+        data-aos="fade-down"
+        className="text-center text-gray-600 text-base md:text-lg max-w-3xl mx-auto mb-10 font-secondary"
+      >
         Share your extra meals, help others, and reduce food waste — all in just
         3 easy steps.
       </p>
@@ -46,7 +52,7 @@ const HowItWorks = () => {
         {/* Left Side - Steps */}
         <div>
           {steps.map((step) => (
-            <div
+            <div data-aos="fade-up"
               key={step.id}
               className="border border-[#009368] rounded-xl p-5 md:p-6 mb-6 shadow-md 
                          hover:-translate-y-2 transition-all duration-300 hover:shadow-lg"
@@ -66,7 +72,7 @@ const HowItWorks = () => {
           ))}
         </div>
 
-        <div className="flex justify-center">
+        <div data-aos="fade-up" className="flex justify-center">
           <Swiper
             spaceBetween={20}
             slidesPerView={1}

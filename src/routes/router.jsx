@@ -10,6 +10,7 @@ import MyFoodRequests from "../pages/MyFoodRequests";
 import ManageMyFoods from "../pages/ManageMyFoods";
 import FoodsDetails from "../pages/FoodsDetails";
 import PrivateRoute from "./PrivetRoute";
+import ErrorPage from "../pages/ErrorPage";
 
 
 
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: '/*',
+        element: <ErrorPage></ErrorPage>
+      }
     ],
   },
 ]);

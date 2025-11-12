@@ -143,78 +143,80 @@ const ManageMyFoods = () => {
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
         Manage <span className="text-primary ">Foods</span>
       </h1>
-      { myFoods ?
-        (
-      <div className="w-full flex justify-center">
-        <div className="overflow-x-auto shadow-md rounded-2xl w-full">
-          <table className="table w-full text-center">
-            {/* head */}
-            <thead className="bg-[#009368]/10 text-[#009368] font-semibold">
-              <tr>
-                <th>Food</th>
-                <th>Quantity</th>
-                <th>Location</th>
-                <th>Expire Date</th>
-                <th>Status</th>
-                <th>Note</th>
-                <th>Update / Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {myFoods.map((food) => (
-                <tr key={food?._id}>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="h-15 w-20 rounded-md">
-                          <img
-                            src={food?.food_image}
-                            alt="Avatar Tailwind CSS Component"
-                          />
+      {myFoods.length === 0 ? (
+        <div colSpan="7" className="py-10 text-gray-500">
+          No food found.
+        </div>
+      ) : (
+        <div className="w-full flex justify-center">
+          <div className="overflow-x-auto shadow-md rounded-2xl w-full">
+            <table className="table w-full text-center">
+              {/* head */}
+              <thead className="bg-[#009368]/10 text-[#009368] font-semibold">
+                <tr>
+                  <th>Food</th>
+                  <th>Quantity</th>
+                  <th>Location</th>
+                  <th>Expire Date</th>
+                  <th>Status</th>
+                  <th>Note</th>
+                  <th>Update / Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                {myFoods.map((food) => (
+                  <tr key={food?._id}>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="h-15 w-20 rounded-md">
+                            <img
+                              src={food?.food_image}
+                              alt="Avatar Tailwind CSS Component"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{food?.food_name}</div>
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{food?.food_name}</div>
+                    </td>
+                    <td>{food?.food_quantity}</td>
+                    <td>{food?.pickup_location}</td>
+                    <td>{food?.expire_date}</td>
+
+                    <td>
+                      <div className="badge badge-success text-white">
+                        {food?.food_status}
                       </div>
-                    </div>
-                  </td>
-                  <td>{food?.food_quantity}</td>
-                  <td>{food?.pickup_location}</td>
-                  <td>{food?.expire_date}</td>
+                    </td>
+                    <td>{food?.additional_notes}</td>
+                    <th className="w-full flex justify-center gap-3">
+                      <button
+                        onClick={() => {
+                          setSelectedFood(food);
+                          handleFoodModalOpen();
+                        }}
+                        className="btn btn-soft btn-success hover:text-white rounded-3xl"
+                      >
+                        Update
+                      </button>
 
-                  <td>
-                    <div className="badge badge-success text-white">
-                      {food?.food_status}
-                    </div>
-                  </td>
-                  <td>{food?.additional_notes}</td>
-                  <th className="w-full flex justify-center gap-3">
-                    <button
-                      onClick={() => {
-                        setSelectedFood(food);
-                        handleFoodModalOpen();
-                      }}
-                      className="btn btn-soft btn-success hover:text-white rounded-3xl"
-                    >
-                      Update
-                    </button>
-
-                    <button
-                      onClick={() => handleFoodDelete(food)}
-                      className="btn btn-soft btn-error hover:text-white rounded-3xl"
-                    >
-                      Delete
-                    </button>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      <button
+                        onClick={() => handleFoodDelete(food)}
+                        className="btn btn-soft btn-error hover:text-white rounded-3xl"
+                      >
+                        Delete
+                      </button>
+                    </th>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-) :'nod request availabel'
-}
+      )}
       {/* modal */}
       <dialog ref={foodModalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">

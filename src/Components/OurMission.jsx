@@ -53,10 +53,13 @@ const OurMission = () => {
   return (
     <div className="my-20 w-11/12 mx-auto">
       <div className="text-center">
-        <h1 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary  ">
+        <h1
+          data-aos="fade-down"
+          className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary  "
+        >
           OUR <span className="text-[#009368]">MISSION</span>
         </h1>
-        <p className="font-secondary text-gray-600 mt-5">
+        <p data-aos="fade-down" className="font-secondary text-gray-600 mt-5">
           Creating a sustainable network where surplus food reaches people, not
           landfills.
         </p>
@@ -64,6 +67,7 @@ const OurMission = () => {
       <div className="grid md:grid-cols-3 gap-10  mt-15">
         {missions.map((mission) => (
           <div
+            data-aos="fade-up"
             key={mission.id}
             className="relative border border-[#009368] rounded-xl p-8 text-center max-w-md mx-auto 
 transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:border-[#00b17a]"

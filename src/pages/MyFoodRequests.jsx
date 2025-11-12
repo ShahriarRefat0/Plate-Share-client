@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 const MyFoodRequests = () => {
   const { user } = use(AuthContext);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [myFoodReq, setMyFoodReq] = useState([]);
 
   useEffect(() => {
@@ -66,7 +66,13 @@ const MyFoodRequests = () => {
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
         My <span className="text-primary ">Food</span> Request
       </h1>
-      {myFoodReq.length === 0 ? (
+      {myFoodReq.length === 0 ?   (
+   
+          <div colSpan="7" className="py-10 text-gray-500">
+            No food requests found.
+          </div>
+       
+      ) : (
         <div className="w-full flex justify-center">
           <div className="overflow-x-auto shadow-md rounded-2xl w-full">
             <table className="table w-full text-center">
@@ -125,12 +131,6 @@ const MyFoodRequests = () => {
             </table>
           </div>
         </div>
-      ) : (
-        <tr>
-          <td colSpan="7" className="py-10 text-gray-500">
-            No food requests found.
-          </td>
-        </tr>
       )}
     </div>
   );

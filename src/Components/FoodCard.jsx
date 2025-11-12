@@ -1,10 +1,15 @@
-import React from 'react';
+import Aos from 'aos';
+import React, { useEffect } from 'react';
 import { FaMapMarkerAlt, FaRegClock } from 'react-icons/fa';
 import { IoIosPeople } from "react-icons/io";
 import { Link } from 'react-router';
 
 
 const FoodCard = ({ food }) => {
+
+useEffect(() => {
+  Aos.refresh();
+}, []);
 
   const {
     food_name,
@@ -18,7 +23,10 @@ const FoodCard = ({ food }) => {
 
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition duration-500 animate__animated animate__fadeInUp">
+    <div
+      data-aos="fade-up"
+      className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition duration-500 animate__animated animate__fadeInUp"
+    >
       <img
         src={food_image}
         alt={food_name}
