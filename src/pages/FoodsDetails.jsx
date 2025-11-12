@@ -26,6 +26,35 @@ const FoodsDetails = () => {
   } = foodDetails || {};
 
 
+  const handleRequestStatus = (id, foodId, status) => {
+    fetch(`http://localhost:3000/update-request/${id}`, {
+      method: "PUT",
+      headers: {
+        'content-type' : 'application/json'
+      },
+      body: JSON.stringify({status, foodId})
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.modifiedCount > 0) {
+          Swal.fire({
+            title: `Request ${status}!`,
+            icon: status === "Accepted" ? "success" : "error",
+          });
+
+          setFoodRequests((pre) =>
+            pre.map((req) => (req._id ? { ...req, req_status: status } : req))
+          );
+
+          if (status === "Accepted") {
+            setFoodDetails((pre) => ({ ...pre, food_status: "Donated" }));
+          }
+        }
+    })
+    
+}
+
+
 
   const handleReqFood = (e) => {
     e.preventDefault();
@@ -119,7 +148,11 @@ const FoodsDetails = () => {
               alt={food_name}
               className="h-80 md:h-full w-full object-cover rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none"
             />
-            <div className="absolute top-4 left-4 bg-[#009368] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md">
+            <div
+              className={`absolute top-4 left-4 bg-[#009368] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md ${
+                food_status == "Available" ? "bg-[#009368] " : "bg-[#d8d500] "
+              }`}
+            >
               {food_status}
             </div>
           </div>
@@ -289,15 +322,15 @@ const FoodsDetails = () => {
                             {request?.req_name}
                           </p>
                           <p className="text-sm text-gray-600">
-                            Email: {request?.req_email}
+                            {request?.req_email}
                           </p>
                         </div>
                       </div>
                     </td>
                     <td>
                       <div className="text-sm text-gray-600">
-                        <p>Phone: {request?.req_contact}</p>
-                        <p>Add: {request?.req_location}</p>
+                        <p> {request?.req_contact}</p>
+                        <p>{request?.req_location}</p>
                       </div>
                     </td>
                     <td>
@@ -312,18 +345,30 @@ const FoodsDetails = () => {
                     </td>
                     <th className="w-full flex justify-center gap-6">
                       <button
-                        // onClick={() => {
-                        //   setSelectedFood(food);
-                        //   handleFoodModalOpen();
-                        // }}
+                        onClick={() => {
+                          handleRequestStatus(
+                            request._id,
+                            request.req_foodId,
+                            "Accepted"
+                          );
+                        }}
+                        disabled={request.req_status !== "Pending"}
                         className="btn btn-soft btn-success hover:text-white rounded-3xl"
                       >
-                        Accept
+                        {request.req_status === "Accepted" ? "Accept" : "Request Accepted"}
                       </button>
 
                       <button
-                        // onClick={() => handleFoodDelete(food)}
-                        className="btn btn-soft btn-error hover:text-white rounded-3xl"
+                        onClick={() =>
+                          handleRequestStatus(
+                            request._id,
+                            request.req_foodId,
+                            "Rejected"
+                          )
+                        }
+                        className={`btn btn-soft btn-error hover:text-white rounded-3xl ${
+                          request.req_status !== "Pending" ? "hidden " : ""
+                        }`}
                       >
                         Reject
                       </button>
