@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { motion } from "framer-motion";
 import { HiArrowTopRightOnSquare } from "react-icons/hi2";
+import { Link } from "react-router";
 
 const Hero = () => {
   const slides = [
@@ -99,7 +100,7 @@ const Hero = () => {
     w-40 md:w-48 lg:w-56 font-primary
   "
                 >
-                  View All Foods
+                  <Link to="/available-foods">View All Foods</Link>
                   <HiArrowTopRightOnSquare className="text-lg md:text-xl" />
                 </motion.button>
               </motion.div>

@@ -30,7 +30,6 @@ const AddFood = () => {
     // console.log('added')
 setLoading(true)
     const newFood = {
- 
       food_name: form.food_name.value,
       food_image: form.food_image.value,
       food_quantity: parseInt(form.food_quantity.value),
@@ -40,7 +39,7 @@ setLoading(true)
       donator: {
         name: form.donator_name.value,
         email: form.donator_email.value,
-        image: user.photoURL,
+        image: form.donator_photoURL.value,
       },
       food_status: "Available",
     };
@@ -83,7 +82,10 @@ setLoading(true)
   return (
     <div className="py-10 min-h-screen animated-bg">
       <div className="text-center">
-        <Link to='/' className="text-primary text-xl flex gap-3 items-center justify-center ">
+        <Link
+          to="/"
+          className="text-primary text-xl flex gap-3 items-center justify-center "
+        >
           <span>
             <HiOutlineArrowLeft />
           </span>{" "}
@@ -158,21 +160,31 @@ setLoading(true)
                 Donator Information
               </h3>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  defaultValue={user?.displayName}
-                  name="donator_name"
-                  placeholder="Donator Name"
-                  required
-                  className="input input-bordered w-full rounded-full bg-green-50"
-                />
+              <div className="flex flex-col gap-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    defaultValue={user?.displayName}
+                    name="donator_name"
+                    placeholder="Donator Name"
+                    required
+                    className="input input-bordered w-full rounded-full bg-green-50"
+                  />
 
+                  <input
+                    type="email"
+                    name="donator_email"
+                    defaultValue={user?.email}
+                    placeholder="Donator Email"
+                    required
+                    className="input input-bordered w-full rounded-full bg-green-50"
+                  />
+                </div>
                 <input
-                  type="email"
-                  name="donator_email"
-                  defaultValue={user?.email}
-                  placeholder="Donator Email"
+                  defaultValue={user?.photoURL}
+                  type="text"
+                  name="donator_photoURL"
+                  placeholder="Donator Image URL"
                   required
                   className="input input-bordered w-full rounded-full bg-green-50"
                 />

@@ -10,9 +10,9 @@ import Swal from "sweetalert2";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUser, setUser, user, updateUser } = use(AuthContext);
+  const { createUser, setUser, updateUser } = use(AuthContext);
   const navigate = useNavigate();
-
+const [passwordError, setPasswordError] = useState("");
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -21,7 +21,16 @@ const Register = () => {
     const password = form.password.value;
     const photoURL = form.photoURL.value;
     //console.log(displayName, email, password, photoURL);
-
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+          if (!passwordRegex.test(password)) {
+            setPasswordError(
+              "Password must have at least one uppercase, one lowercase letter, and be 6 characters long."
+            );
+            return;
+          } else {
+            setPasswordError(""); // clear error when valid
+          }
+    
     //const newUser = {name, email, password, photoURL}
 
     createUser(email, password)
@@ -112,10 +121,16 @@ const Register = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600 text-sm"
+                className="absolute right-4 top-5 -translate-y-1/2 text-green-600 text-sm"
               >
                 {showPassword ? <FiEyeOff /> : <GoEye />}
               </button>
+
+              {passwordError && (
+                <p className="text-red-500 text-sm font-medium mt-2">
+                  {passwordError}
+                </p>
+              )}
             </div>
 
             {/* <input

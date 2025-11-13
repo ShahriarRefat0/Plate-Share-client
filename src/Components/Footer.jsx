@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../../public/logo.png'
 
 import { FaFacebookSquare, FaLinkedin } from "react-icons/fa";
-import { FaSquareInstagram, FaSquareWhatsapp } from "react-icons/fa6";
+import { FaSquareInstagram, FaSquareWhatsapp, FaXTwitter } from "react-icons/fa6";
 
 import {
   IoCallOutline,
@@ -86,12 +86,12 @@ const Footer = () => {
                 <FaLinkedin size={30} />
               </a>
               <a
-                href="https://www.whatsapp.com/?lang=en"
+                href="https://www.x.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link link-hover"
               >
-                <FaSquareWhatsapp size={30} />
+                <FaXTwitter size={30} />
               </a>
             </div>
 

@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { user, loginWithGoogle, createUser } = use(AuthContext);
+  const {  loginWithGoogle, loginWithPass } = use(AuthContext);
   const navigate = useNavigate();
   const location = useLocation()
   //console.log(user)
@@ -42,7 +42,7 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     //console.log(email, password);
-    createUser(email, password)
+    loginWithPass(email, password)
       .then((res) => {
         //        console.log("login by pass", res);
         Swal.fire({
@@ -50,15 +50,15 @@ const Login = () => {
           icon: "success",
           draggable: true,
         });
-        navigate(`${location.state ? location.state : '/'}`);
+        navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((e) => {
-        // console.log(e);
-         Swal.fire({
-           icon: "error",
-           title: "Oops...",
-           text: "Something went wrong!",
-         });
+        console.log(e);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       });
   };
 

@@ -42,7 +42,7 @@ const FoodsDetails = () => {
           });
 
           setFoodRequests((pre) =>
-            pre.map((req) => (req._id ? { ...req, req_status: status } : req))
+            pre.map((req) => (req._id === id ? { ...req, req_status: status } : req))
           );
 
           if (status === "Accepted") {
@@ -83,7 +83,7 @@ const FoodsDetails = () => {
         console.log(data);
         if (data.insertedId) {
           Swal.fire({
-            title: "Sed Done",
+            title: "Send Done",
             text: "Food request send successfully.",
             icon: "success",
           });
@@ -103,7 +103,7 @@ const FoodsDetails = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-       // console.log("foods req", data);
+     //  console.log("foods req", data);
         setFoodRequests(data);
       })
       .catch((e) => {
@@ -137,15 +137,15 @@ const FoodsDetails = () => {
       </Link>
       <div className="bg-white shadow-2xl rounded-3xl overflow-hidden border border-gray-100">
         <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-1/2 relative">
+          <div className="w-full h-64 sm:h-72 md:h-80 lg:h-[500px] overflow-hidden rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none relative">
             <img
               src={food_image}
               alt={food_name}
-              className="h-80 md:h-full w-full object-cover rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none"
+              className="w-full h-full object-cover"
             />
             <div
               className={`absolute top-4 left-4 bg-[#009368] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md ${
-                food_status == "Available" ? "bg-[#009368] " : "bg-[#d8d500] "
+                food_status == "Available" ? "bg-[#009368] " : "bg-[#ffc70f] "
               }`}
             >
               {food_status}
@@ -170,7 +170,7 @@ const FoodsDetails = () => {
                 </div>
 
                 <div className="flex justify-between items-center border-b pb-2">
-                  <p className="flex items-center gap-2 font-medium">
+                  <p className="flex items-center justify-between  gap-3 font-medium">
                     <FaMapMarkerAlt className="text-[#009368]" /> Location:
                   </p>
                   <p className="text-gray-800 font-semibold">
@@ -279,7 +279,9 @@ const FoodsDetails = () => {
       </div>
 
       {/* request table */}
-      {!foodRequests ? (
+      {foodRequests.length === 0 ? (
+        " "
+      ) : (
         <div className="mt-35">
           <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
             Requests For<span className="text-primary "> Food</span>
@@ -330,7 +332,13 @@ const FoodsDetails = () => {
                         </div>
                       </td>
                       <td>
-                        <div className="badge badge-warning text-white">
+                        <div
+                          className={`badge text-white ${
+                            request?.req_status === "Pending"
+                              ? "badge-warning "
+                              : "badge-success "
+                          }`}
+                        >
                           {request?.req_status}
                         </div>
                       </td>
@@ -348,14 +356,11 @@ const FoodsDetails = () => {
                               "Accepted"
                             );
                           }}
-                          disabled={request.req_status === "Accepted"}
-                          className={`btn btn-soft btn-success hover:text-white rounded-3xl ${
-                            request.req_status !== "Accepted" ? " hidden" : ""
-                          }`}
+                          disabled={request.req_status !== "Pending"}
+                          className={`btn btn-soft btn-success hover:text-white rounded-3xl
+      ${request.req_status === "Pending" ? "" : "hidden"}`}
                         >
-                          {request.req_status === "Accepted"
-                            ? "Request Accepted"
-                            : "Accept"}
+                          Accept
                         </button>
 
                         <button
@@ -366,14 +371,27 @@ const FoodsDetails = () => {
                               "Rejected"
                             )
                           }
-                          disabled={request.req_status !== "Accepted"}
-                          className={`btn btn-soft btn-error hover:text-white rounded-3xl ${
-                            request.req_status !== "Accepted" ? " " : "hidden"
-                          }`}
+                          disabled={request.req_status !== "Pending"}
+                          className={`btn btn-soft btn-error hover:text-white rounded-3xl
+      ${request.req_status === "Pending" ? "" : "hidden"}`}
                         >
-                          {request.req_status !== "Accepted"
-                            ? "Reject"
-                            : "Request Rejected"}
+                          Reject
+                        </button>
+
+                        <button
+                          disabled
+                          className={`btn btn-soft btn-success hover:text-white rounded-3xl
+      ${request.req_status === "Accepted" ? "" : "hidden"}`}
+                        >
+                          Request Accepted
+                        </button>
+
+                        <button
+                          disabled
+                          className={`btn btn-soft btn-error  hover:text-white rounded-3xl
+      ${request.req_status === "Rejected" ? "" : "hidden"}`}
+                        >
+                          Request Rejected
                         </button>
                       </th>
                     </tr>
@@ -383,8 +401,6 @@ const FoodsDetails = () => {
             </div>
           </div>
         </div>
-      ) : (
-        " "
       )}
     </div>
   );
