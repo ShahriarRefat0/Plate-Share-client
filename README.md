@@ -1,8 +1,8 @@
 # 🍽️ PlateShare — Community Food Sharing Platform  
 
 ### 🌐 Live Website  
-🔗 [Visit PlateShare Live Site](#)  
-🔗 [Server API (Vercel)](#)  
+🔗 [Visit PlateShare Live Site](https://plate-share-b21c8.web.app/)  
+🔗 [Server API (Vercel)](https://plate-share-server-sigma.vercel.app/)  
 
 ---
 

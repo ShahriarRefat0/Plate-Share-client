@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import FoodCard from './FoodCard';
-import { FaAnglesLeft, FaAnglesRight } from 'react-icons/fa6';
-import { Link } from 'react-router';
-
+import React, { useEffect, useState } from "react";
+import FoodCard from "./FoodCard";
+import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
+import { Link } from "react-router";
 
 const FeaturedFoods = () => {
-  const [foods, setFoods]  = useState([])
+  const [foods, setFoods] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/highest-quantity-foods")
-      .then(res => res.json())
-      .then(data => {
-        setFoods(data)
+    fetch("https://plate-share-server-sigma.vercel.app/highest-quantity-foods")
+      .then((res) => res.json())
+      .then((data) => {
+        setFoods(data);
       });
-  },[])
+  }, []);
   //console.log(foods)
-
 
   return (
     <div className="w-11/12  mx-auto my-20">

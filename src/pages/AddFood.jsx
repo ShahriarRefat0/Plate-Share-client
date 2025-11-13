@@ -7,28 +7,25 @@ import Swal from "sweetalert2";
 import { Link } from "react-router";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
-
 const AddFood = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [expireDate, setExpireDate] = useState(null);
   const { user } = use(AuthContext);
 
   // console.log(user)
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const timer = setTimeout(() => {
-      setLoading(false)
+      setLoading(false);
     }, 1500);
-    return ()=> clearTimeout(timer)
-  }, [])
-  
-
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleAddFood = (e) => {
     e.preventDefault();
     const form = e.target;
     // console.log('added')
-setLoading(true)
+    setLoading(true);
     const newFood = {
       food_name: form.food_name.value,
       food_image: form.food_image.value,
@@ -46,7 +43,7 @@ setLoading(true)
 
     //console.log(newFood);
 
-    fetch("http://localhost:3000/foods", {
+    fetch("https://plate-share-server-sigma.vercel.app/foods", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -57,13 +54,12 @@ setLoading(true)
       .then((data) => {
         // console.log(data);
         if (data.insertedId) {
-             Swal.fire({
-               title: "Food Added Successfully",
-               icon: "success",
-               draggable: true,
-             });
-           form.reset()
-
+          Swal.fire({
+            title: "Food Added Successfully",
+            icon: "success",
+            draggable: true,
+          });
+          form.reset();
         }
       })
       .catch((e) => {
@@ -74,10 +70,10 @@ setLoading(true)
           text: "Something went wrong!",
         });
       })
-      .finally(()=>setLoading(false));
+      .finally(() => setLoading(false));
   };
 
-  if(loading) return <LoadingSpinner></LoadingSpinner>;
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="py-10 min-h-screen animated-bg">

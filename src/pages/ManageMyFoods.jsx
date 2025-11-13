@@ -28,28 +28,31 @@ const ManageMyFoods = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/delete-food/${food?._id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://plate-share-server-sigma.vercel.app/delete-food/${food?._id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             //console.log('after delete', data)
             if (data.deletedCount) {
-                   setMyFoods((prev) => prev.filter((f) => f._id !== food._id));
-               Swal.fire({
-                 title: "Deleted!",
-                 text: "Your food has been deleted.",
-                 icon: "success",
-               });
+              setMyFoods((prev) => prev.filter((f) => f._id !== food._id));
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your food has been deleted.",
+                icon: "success",
+              });
             }
           })
-          .catch(e => {
-             Swal.fire({
-               title: "Error!",
-               text: "Something went wrong while deleting.",
-               icon: "error",
-             });
-            console.log(e)
+          .catch((e) => {
+            Swal.fire({
+              title: "Error!",
+              text: "Something went wrong while deleting.",
+              icon: "error",
+            });
+            console.log(e);
           });
       }
     });
@@ -78,13 +81,16 @@ const ManageMyFoods = () => {
 
     // console.log("update food",updateFood);
 
-    fetch(`http://localhost:3000/update-food/${selectedFood?._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updateFood),
-    })
+    fetch(
+      `https://plate-share-server-sigma.vercel.app/update-food/${selectedFood?._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(updateFood),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -117,7 +123,9 @@ const ManageMyFoods = () => {
     setLoading(true);
     if (!user?.email) return;
 
-    fetch(`http://localhost:3000/my-foods?email=${user.email}`)
+    fetch(
+      `https://plate-share-server-sigma.vercel.app/my-foods?email=${user.email}`
+    )
       .then((res) => res.json())
       .then((data) => {
         //console.log(data)

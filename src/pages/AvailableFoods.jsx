@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import FoodCard from '../Components/FoodCard';
-import LoadingSpinner from '../Components/LoadingSpinner';
+import React, { useEffect, useState } from "react";
+import FoodCard from "../Components/FoodCard";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const AvailableFoods = () => {
-    const [loading, setLoading] = useState(true)
-const [foods, setFoods] =useState([])
+  const [loading, setLoading] = useState(true);
+  const [foods, setFoods] = useState([]);
 
   useEffect(() => {
-      setLoading(true);
-    fetch("http://localhost:3000/foods?status=available")
-      .then(res => res.json())
-      .then(data => {
-        setFoods(data)
+    setLoading(true);
+    fetch("https://plate-share-server-sigma.vercel.app/foods?status=available")
+      .then((res) => res.json())
+      .then((data) => {
+        setFoods(data);
       })
-      .finally(()=> setLoading(false));
-  }, [])
-  
+      .finally(() => setLoading(false));
+  }, []);
 
   //console.log(foods)
-  if (loading)return <LoadingSpinner></LoadingSpinner>;
+  if (loading) return <LoadingSpinner></LoadingSpinner>;
   return (
     <div className="w-11/12 mx-auto my-15">
       <div>

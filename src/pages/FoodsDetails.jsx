@@ -9,7 +9,7 @@ import LoadingSpinner from "../Components/LoadingSpinner";
 
 const FoodsDetails = () => {
   const { id } = useParams();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [foodDetails, setFoodDetails] = useState();
   const reqModalRef = useRef();
   const { user } = use(AuthContext);
@@ -28,7 +28,7 @@ const FoodsDetails = () => {
   } = foodDetails || {};
 
   const handleRequestStatus = (id, foodId, status) => {
-    fetch(`http://localhost:3000/update-request/${id}`, {
+    fetch(`https://plate-share-server-sigma.vercel.app/update-request/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -44,7 +44,9 @@ const FoodsDetails = () => {
           });
 
           setFoodRequests((pre) =>
-            pre.map((req) => (req._id === id ? { ...req, req_status: status } : req))
+            pre.map((req) =>
+              req._id === id ? { ...req, req_status: status } : req
+            )
           );
 
           if (status === "Accepted") {
@@ -75,7 +77,7 @@ const FoodsDetails = () => {
 
     // console.log(reqInfo)
 
-    fetch(`http://localhost:3000/food-request`, {
+    fetch(`https://plate-share-server-sigma.vercel.app/food-request`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -101,24 +103,24 @@ const FoodsDetails = () => {
   };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     if (!id || !user?.email) return;
     fetch(
-      `http://localhost:3000/food-request?req_foodId=${id}&donator_email=${user?.email}`
+      `https://plate-share-server-sigma.vercel.app/food-request?req_foodId=${id}&donator_email=${user?.email}`
     )
       .then((res) => res.json())
       .then((data) => {
-     //  console.log("foods req", data);
+        //  console.log("foods req", data);
         setFoodRequests(data);
       })
       .catch((e) => {
         // console.log(e);
       });
-    setLoading(false)
+    setLoading(false);
   }, [id, user?.email]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/foods/${id}`)
+    fetch(`https://plate-share-server-sigma.vercel.app/foods/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setFoodDetails(data);
