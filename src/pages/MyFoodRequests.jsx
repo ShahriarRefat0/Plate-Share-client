@@ -59,19 +59,17 @@ const MyFoodRequests = () => {
     });
   };
 
-  // console.log(myFoodReq)
+  console.log(myFoodReq)
 
   return (
     <div className="min-h-screen w-11/12 mx-auto flex flex-col items-center justify-start py-10 bg-white">
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-8 font-primary">
         My <span className="text-primary ">Food</span> Request
       </h1>
-      {myFoodReq.length === 0 ?   (
-   
-          <div colSpan="7" className="py-10 text-gray-500">
-            No food requests found.
-          </div>
-       
+      {myFoodReq.length === 0 ? (
+        <div colSpan="7" className="py-10 text-gray-500">
+          No food requests found.
+        </div>
       ) : (
         <div className="w-full flex justify-center">
           <div className="overflow-x-auto shadow-md rounded-2xl w-full">
@@ -107,12 +105,16 @@ const MyFoodRequests = () => {
                         </div>
                       </div>
                     </td>
-                    <td>{food?.food_quantity}</td>
+                    <td>{food?.req_foodQuantity}</td>
                     <td>{food?.req_location}</td>
-                    <td>{food?.expire_date}</td>
+                    <td>{food?.req_foodExDate}</td>
 
                     <td>
-                      <div className="badge badge-success text-white">
+                      <div
+                        className={`badge  text-white ${
+                          food?.req_status === " Accepted" ? 'badge-success' : 'badge-warning'
+                        }`}
+                      >
                         {food?.req_status}
                       </div>
                     </td>

@@ -5,9 +5,11 @@ import { IoIosPeople } from "react-icons/io";
 import { Link, useParams } from "react-router";
 import { AuthContext } from "../authProvider/AuthProvider";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const FoodsDetails = () => {
   const { id } = useParams();
+  const [loading, setLoading] = useState(false)
   const [foodDetails, setFoodDetails] = useState();
   const reqModalRef = useRef();
   const { user } = use(AuthContext);
@@ -67,6 +69,8 @@ const FoodsDetails = () => {
       req_foodName: food_name,
       donator_email: foodDetails.donator.email,
       req_foodImg: foodDetails.food_image,
+      req_foodExDate: foodDetails.expire_date,
+      req_foodQuantity: foodDetails.food_quantity,
     };
 
     // console.log(reqInfo)
@@ -97,6 +101,7 @@ const FoodsDetails = () => {
   };
 
   useEffect(() => {
+    setLoading(true)
     if (!id || !user?.email) return;
     fetch(
       `http://localhost:3000/food-request?req_foodId=${id}&donator_email=${user?.email}`
@@ -109,6 +114,7 @@ const FoodsDetails = () => {
       .catch((e) => {
         // console.log(e);
       });
+    setLoading(false)
   }, [id, user?.email]);
 
   useEffect(() => {
@@ -126,6 +132,10 @@ const FoodsDetails = () => {
   const handleReqModalCose = () => {
     reqModalRef.current.close();
   };
+
+  if (loading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 md:py-16">
