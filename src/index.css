@@ -4,36 +4,50 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #009368;
+ --color-secondary: #dfeee4;
+}
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: true;
+  --color-primary: #013d34;
+--color-secondary: #31363F;
+}
+
 /* font style */
-.font-primary{
+.font-primary {
   font-family: "Noto Serif", serif;
 }
 
-.font-secondary{
+.font-secondary {
   font-family: "Poppins", sans-serif;
 }
 
-@layer utilities {
-  /* bg */
-  .bg-primary{
-    @apply bg-[#009368]
+/* @layer utilities {
+
+
+  .bg-primary {
+    @apply bg-[#009368] dark:bg-[#007a56]
   }
-/* text */
-.text-primary {
+
+  .text-primary {
     @apply text-[#009368]
   }
 
 
-  /* btn */
   .btn-secondary {
     @apply bg-[#ffff] text-[#009368] font-semibold px-6 py-2 rounded-full hover:bg-[#009368] hover:text-[#ffff] border border-[#009368] transition-all duration-300;
   }
-  .btn-primary{
-    @apply hover:bg-[#ffff] hover:text-[#009368] font-semibold px-6 py-2 rounded-full  bg-[#009368] text-[#ffff] border border-[#009368] transition-all duration-300
+
+  .btn-primary {
+    @apply hover:bg-[#ffff] hover:text-[#009368] font-semibold px-6 py-2 rounded-full bg-[#009368] text-[#ffff] border border-[#009368] transition-all duration-300
   }
 
 
-}
+} */
 
 /* 🚀 Animated shining gradient background */
 .animated-bg {
@@ -83,7 +97,14 @@
     transform: scale(1.2);
   }
 }
+
 .animated-bg::before {
   filter: blur(40px);
   /* instead of 80px - smoother on budget phones */
+}
+
+@layer utilities {
+  .card-shadow {
+    @apply shadow-lg shadow-black/15 dark:shadow-lg dark:shadow-white/20;
+  }
 }

@@ -28,12 +28,9 @@ const ManageMyFoods = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://plate-share-server-sigma.vercel.app/delete-food/${food?._id}`,
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`http://localhost:3000/delete-food/${food?._id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             //console.log('after delete', data)
@@ -81,16 +78,13 @@ const ManageMyFoods = () => {
 
     // console.log("update food",updateFood);
 
-    fetch(
-      `https://plate-share-server-sigma.vercel.app/update-food/${selectedFood?._id}`,
-      {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(updateFood),
-      }
-    )
+    fetch(`http://localhost:3000/update-food/${selectedFood?._id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateFood),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -123,9 +117,7 @@ const ManageMyFoods = () => {
     setLoading(true);
     if (!user?.email) return;
 
-    fetch(
-      `https://plate-share-server-sigma.vercel.app/my-foods?email=${user.email}`
-    )
+    fetch(`http://localhost:3000/my-foods?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         //console.log(data)

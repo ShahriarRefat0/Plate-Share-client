@@ -43,7 +43,7 @@ const AddFood = () => {
 
     //console.log(newFood);
 
-    fetch("https://plate-share-server-sigma.vercel.app/foods", {
+    fetch("http://localhost:3000/foods", {
       method: "POST",
       headers: {
         "content-type": "application/json",

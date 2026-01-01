@@ -6,11 +6,14 @@ import { AuthContext } from "../authProvider/AuthProvider";
 import { IoLogOut } from "react-icons/io5";
 import { MdOutlineLibraryAdd, MdOutlineManageHistory } from "react-icons/md";
 import { LuGitPullRequestCreateArrow } from "react-icons/lu";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import Swal from "sweetalert2";
+import useTheme from "../hooks/useTheme";
 
 const Navbar = () => {
   const { user, logOutUser } = use(AuthContext);
-const navigate = useNavigate()
+  const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate()
 
   const signOutUser = (e) => {
     e.preventDefault();
@@ -26,11 +29,11 @@ const navigate = useNavigate()
       })
       .catch((e) => {
         //console.log(e);
-         Swal.fire({
-                  icon: "error",
-                  title: "Oops...",
-                  text: "Something went wrong!",
-                });
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       });
   };
 
@@ -50,6 +53,14 @@ const navigate = useNavigate()
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           Available Foods
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/about-us"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          About Us
         </NavLink>
       </li>
     </>
@@ -117,7 +128,7 @@ const navigate = useNavigate()
   );
 
   return (
-    <div className="bg-[#009368] shadow-md h-20 font-secondary">
+    <div className="bg-primary shadow-md h-20 font-secondary">
       <div className="navbar text-white w-11/12 mx-auto">
         {/* LEFT SIDE */}
         <div className="navbar-start">
@@ -173,7 +184,21 @@ const navigate = useNavigate()
 
         {/* RIGHT SIDE BUTTONS */}
         <div className="navbar-end mx-w-30 gap-5">
-          <div className="lg:flex gap-4">{showBtns}</div>
+          <div className="lg:flex gap-4 items-center">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="btn btn-circle btn-ghost text-white hover:bg-white/20 transition-all duration-300"
+              aria-label="Toggle theme"
+            >
+              {theme === 'light' ? (
+                <MdDarkMode className="text-2xl" />
+              ) : (
+                <MdLightMode className="text-2xl" />
+              )}
+            </button>
+            {showBtns}
+          </div>
         </div>
       </div>
     </div>

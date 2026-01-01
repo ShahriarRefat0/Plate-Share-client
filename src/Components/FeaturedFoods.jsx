@@ -7,7 +7,7 @@ const FeaturedFoods = () => {
   const [foods, setFoods] = useState([]);
 
   useEffect(() => {
-    fetch("https://plate-share-server-sigma.vercel.app/highest-quantity-foods")
+    fetch("http://localhost:3000/highest-quantity-foods")
       .then((res) => res.json())
       .then((data) => {
         setFoods(data);
@@ -22,7 +22,7 @@ const FeaturedFoods = () => {
           Featured <span className="text-primary">Foods</span>
         </h1>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-15">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-15">
         {foods.map((food) => (
           <FoodCard key={food._id} food={food}></FoodCard>
         ))}
@@ -33,7 +33,7 @@ const FeaturedFoods = () => {
       >
         <Link
           to="/available-foods"
-          className="btn-primary w-60 flex items-center justify-center gap-5"
+          className="btn btn-primary w-60 flex text-white items-center justify-center gap-5"
         >
           <FaAnglesLeft /> Show All <FaAnglesRight />
         </Link>

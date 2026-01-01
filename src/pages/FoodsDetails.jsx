@@ -28,7 +28,7 @@ const FoodsDetails = () => {
   } = foodDetails || {};
 
   const handleRequestStatus = (id, foodId, status) => {
-    fetch(`https://plate-share-server-sigma.vercel.app/update-request/${id}`, {
+    fetch(`http://localhost:3000/update-request/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -77,7 +77,7 @@ const FoodsDetails = () => {
 
     // console.log(reqInfo)
 
-    fetch(`https://plate-share-server-sigma.vercel.app/food-request`, {
+    fetch(`http://localhost:3000/food-request`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -106,7 +106,7 @@ const FoodsDetails = () => {
     setLoading(true);
     if (!id || !user?.email) return;
     fetch(
-      `https://plate-share-server-sigma.vercel.app/food-request?req_foodId=${id}&donator_email=${user?.email}`
+      `http://localhost:3000/food-request?req_foodId=${id}&donator_email=${user?.email}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -120,7 +120,7 @@ const FoodsDetails = () => {
   }, [id, user?.email]);
 
   useEffect(() => {
-    fetch(`https://plate-share-server-sigma.vercel.app/foods/${id}`)
+    fetch(`http://localhost:3000/foods/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setFoodDetails(data);

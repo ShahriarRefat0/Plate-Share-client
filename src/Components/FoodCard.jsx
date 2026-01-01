@@ -25,7 +25,7 @@ useEffect(() => {
   return (
     <div
       data-aos="fade-up"
-      className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition duration-500 animate__animated animate__fadeInUp"
+      className=" border border-primary rounded-lg shadow-md overflow-hidden transform hover:scale-105 hover:shadow-lg transition duration-500 animate__animated animate__fadeInUp"
     >
       <img
         src={food_image}
@@ -73,7 +73,7 @@ useEffect(() => {
         <div className="mt-4">
           <Link
             to={`/foods-details/${_id}`}
-            className="block text-center bg-white border border-[#009368] hover:bg-[#009368] text-primary hover:text-white py-2 px-5 rounded-full font-semibold  transition duration-300"
+            className="block text-center border border-[#009368] hover:bg-[#009368] text-primary hover:text-white py-2 px-5 rounded-full font-semibold  transition duration-300"
           >
             View Details
           </Link>

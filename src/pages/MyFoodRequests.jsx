@@ -9,9 +9,7 @@ const MyFoodRequests = () => {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(
-      `https://plate-share-server-sigma.vercel.app/user-food-request?user=${user?.email}`
-    )
+    fetch(`http://localhost:3000/user-food-request?user=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         //console.log("foods req", data);
@@ -34,12 +32,9 @@ const MyFoodRequests = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://plate-share-server-sigma.vercel.app/delete-request-food/${food?._id}`,
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`http://localhost:3000/delete-request-food/${food?._id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             //console.log('after delete', data)

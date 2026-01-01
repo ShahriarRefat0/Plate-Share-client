@@ -48,7 +48,7 @@ const HowItWorks = () => {
         3 easy steps.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center bg-[#dfeee4] p-10 rounded-2xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center bg-secondary  p-10 rounded-2xl">
         {/* Left Side - Steps */}
         <div>
           {steps.map((step) => (
