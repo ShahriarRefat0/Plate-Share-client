@@ -103,8 +103,11 @@ Public route that lists all available foods with:
 - Custom 404 page with animation and “Go Back Home” button  
 - SweetAlert2 for all success/error messages  
 
----
+---  
+🧩 Live Screenshot
+<img width="2256" height="6096" alt="modified_image (5)" src="https://github.com/user-attachments/assets/c429f24e-8d32-48c7-861b-23888290e77a" />
 
+--- 
 ## 🏆 Developer
 
 **👤 Shahariar Refat**  
