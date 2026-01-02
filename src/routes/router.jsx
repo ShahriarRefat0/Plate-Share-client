@@ -14,6 +14,9 @@ import PrivateRoute from "./PrivetRoute";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import ContactUs from "../pages/Contact-Us";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import DashboardHome from "../pages/dashboard/DashboardHome";
+import Profile from "../pages/dashboard/Profile";
 
 
 
@@ -21,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayouts></MainLayouts>,
+    errorElement: <ErrorPage></ErrorPage>,
     hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
     children: [
       {
@@ -80,6 +84,21 @@ const router = createBrowserRouter([
         path: '/*',
         element: <ErrorPage></ErrorPage>
       }
+    ],
+  },
+  {
+    path: '/dashboard',
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      { index: true, element: <DashboardHome /> },
+      { path: 'profile', element: <Profile /> },
+      { path: 'add-food', element: <AddFood /> },
+      { path: 'manage-my-foods', element: <ManageMyFoods /> },
+      { path: 'my-food-requests', element: <MyFoodRequests /> },
     ],
   },
 ]);

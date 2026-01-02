@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import logo from "../../public/logo.png";
 import { FaUser } from "react-icons/fa";
@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import useTheme from "../hooks/useTheme";
 
 const Navbar = () => {
-  const { user, logOutUser } = use(AuthContext);
+  const { user, logOutUser } = useContext(AuthContext);
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate()
 
@@ -71,6 +71,14 @@ const Navbar = () => {
           Contact
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          Dashboard
+        </NavLink>
+      </li>
     </>
   );
 
@@ -98,19 +106,35 @@ const Navbar = () => {
         </div>
 
         <li>
-          <Link to="/add-food">
+          <Link to="/dashboard">
+            <FaUser />
+            Dashboard Home
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/dashboard/profile">
+            <FaUser />
+            Profile
+          </Link>
+        </li>
+
+        <li className="divider" />
+
+        <li>
+          <Link to="/dashboard/add-food">
             <MdOutlineLibraryAdd />
             Add Food
           </Link>
         </li>
         <li>
-          <Link to="/manage-my-foods">
+          <Link to="/dashboard/manage-my-foods">
             <MdOutlineManageHistory />
             Manage My Foods
           </Link>
         </li>
         <li>
-          <Link to="/my-food-requests">
+          <Link to="/dashboard/my-food-requests">
             <LuGitPullRequestCreateArrow />
             My Food Requests
           </Link>
@@ -129,7 +153,7 @@ const Navbar = () => {
   ) : (
     <Link
       to="/login"
-        className="bg-white text-primary  btn-xs sm:btn-sm md:btn-md font-semibold px-6 py-2 rounded-xl hover:bg-primary hover:text-white border border-white transition-all duration-300"
+      className="bg-white text-primary  btn-xs sm:btn-sm md:btn-md font-semibold px-6 py-2 rounded-xl hover:bg-primary hover:text-white border border-white transition-all duration-300"
     >
       Login
     </Link>
@@ -192,7 +216,7 @@ const Navbar = () => {
 
         {/* RIGHT SIDE BUTTONS */}
         <div className="navbar-end mx-w-30 gap-5">
-          <div className="lg:flex gap-4 items-center">
+          <div className="flex gap-3 f items-center">
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}

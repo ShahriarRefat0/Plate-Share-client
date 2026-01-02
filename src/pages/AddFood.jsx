@@ -39,6 +39,7 @@ const AddFood = () => {
         image: form.donator_photoURL.value,
       },
       food_status: "Available",
+      createdAt: new Date(),
     };
 
     //console.log(newFood);
@@ -76,26 +77,16 @@ const AddFood = () => {
   if (loading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
-    <div className="py-10 min-h-screen animated-bg">
-      <div className="text-center">
-        <Link
-          to="/"
-          className="text-primary text-xl flex gap-3 items-center justify-center "
-        >
-          <span>
-            <HiOutlineArrowLeft />
-          </span>{" "}
-          <p>Back To Home</p>
-        </Link>
-      </div>
+    <div className="py-10 min-h-screen ">
+      
       <div className="card">
         <div className=" flex items-center justify-center  py-10">
           <form
             onSubmit={handleAddFood}
-            className="bg-white w-full max-w-3xl shadow-2xl rounded-3xl p-8 md:p-10 space-y-6"
+            className=" w-full max-w-3xl bg-base-100 card-shadow rounded-3xl p-8 md:p-10 space-y-6"
           >
             <h3 className="text-3xl md:text-5xl font-bold text-center  mb-4 font-primary">
-              Add <span className="text-primary">Food</span>
+              Add <span className="title">Food</span>
             </h3>
             {/* Food Info Section */}
 
@@ -105,7 +96,7 @@ const AddFood = () => {
                 name="food_name"
                 placeholder="Food Name"
                 required
-                className="input input-bordered w-full rounded-full bg-green-50"
+                className="input  input-custo w-full "
               />
 
               <input
@@ -113,7 +104,7 @@ const AddFood = () => {
                 name="food_image"
                 placeholder="Food Image URL"
                 required
-                className="input input-bordered w-full rounded-full bg-green-50"
+                className="input  input-custo w-full    "
               />
               <div className="grid md:grid-cols-2 gap-4">
                 <input
@@ -121,7 +112,7 @@ const AddFood = () => {
                   name="food_quantity"
                   placeholder="Food Quantity (e.g., 3)"
                   required
-                  className="input input-bordered w-full rounded-full bg-green-50"
+                  className="input  input-custo w-full    "
                 />
 
                 <DatePicker
@@ -129,7 +120,7 @@ const AddFood = () => {
                   onChange={(date) => setExpireDate(date)}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Select Expire Date "
-                  className="input input-bordered w-full rounded-full bg-green-50 focus:ring-2 focus:ring-[#009368] focus:outline-none"
+                  className="input  input-custo w-full     focus:ring-2 focus:ring-[#009368] focus:outline-none"
                   minDate={new Date()} // ⏳ prevents picking past dates
                   required
                 />
@@ -140,14 +131,14 @@ const AddFood = () => {
                 name="pickup_location"
                 placeholder="Pickup Location"
                 required
-                className="input input-bordered w-full rounded-full bg-green-50"
+                className="input  input-custo w-full    "
               />
 
               <textarea
                 name="additional_notes"
                 placeholder="Additional Notes"
                 rows="3"
-                className="textarea textarea-bordered w-full rounded-2xl bg-green-50"
+                className="textarea input-custo w-full rounded-2xl!  "
               ></textarea>
             </div>
 
@@ -164,7 +155,7 @@ const AddFood = () => {
                     name="donator_name"
                     placeholder="Donator Name"
                     required
-                    className="input input-bordered w-full rounded-full bg-green-50"
+                    className="input  input-custo w-full    "
                   />
 
                   <input
@@ -173,7 +164,7 @@ const AddFood = () => {
                     defaultValue={user?.email}
                     placeholder="Donator Email"
                     required
-                    className="input input-bordered w-full rounded-full bg-green-50"
+                    className="input  input-custo w-full    "
                   />
                 </div>
                 <input
@@ -182,7 +173,7 @@ const AddFood = () => {
                   name="donator_photoURL"
                   placeholder="Donator Image URL"
                   required
-                  className="input input-bordered w-full rounded-full bg-green-50"
+                  className="input  input-custo w-full    "
                 />
               </div>
             </div>
@@ -191,9 +182,9 @@ const AddFood = () => {
             <button
               type="submit"
               // disabled={loading}
-              className="btn w-full bg-[#009368] hover:bg-[#007a55] text-white rounded-full mt-4 font-semibold"
+              className="btn w-full btn-primary   mt-4 font-semibold"
             >
-              {/* {loading ? "Adding..." : "Add Food"} */} add
+              {/* {loading ? "Adding..." : "Add Food"} */} add food
             </button>
           </form>
         </div>

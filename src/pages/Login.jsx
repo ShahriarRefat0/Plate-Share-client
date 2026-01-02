@@ -63,7 +63,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen animated-bg flex items-center justify-center">
-      <div className="w-full max-w-md card bg-base-100 shadow-xl rounded-3xl p-10 text-center">
+      <div className="w-full max-w-md card bg-base-100 card-shadow rounded-3xl p-10 text-center">
 
         {/* LOGO */}
         <div className="w-14 h-14 mx-auto rounded-full bg-secondary flex items-center justify-center">
