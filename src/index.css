@@ -26,28 +26,35 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* @layer utilities {
+@layer utilities {
 
 
-  .bg-primary {
+  /* .bg-primary {
     @apply bg-[#009368] dark:bg-[#007a56]
-  }
+  } */
 
-  .text-primary {
+  /* .text-primary {
     @apply text-[#009368]
-  }
+  } */
 
 
   .btn-secondary {
     @apply bg-[#ffff] text-[#009368] font-semibold px-6 py-2 rounded-full hover:bg-[#009368] hover:text-[#ffff] border border-[#009368] transition-all duration-300;
   }
 
+  .title {
+    @apply text-[#009368]
+  }
+
+  .icon {
+    @apply text-[#009368]
+  }
   .btn-primary {
-    @apply hover:bg-[#ffff] hover:text-[#009368] font-semibold px-6 py-2 rounded-full bg-[#009368] text-[#ffff] border border-[#009368] transition-all duration-300
+    @apply hover:bg-[#ffff] hover:text-[#009368] font-semibold px-6 py-2 rounded-full bg-[#009368]  text-[#ffff] border border-[#009368] transition-all duration-300
   }
 
 
-} */
+}
 
 /* 🚀 Animated shining gradient background */
 .animated-bg {
@@ -55,6 +62,33 @@
   background-size: 300% 300%;
   animation: shineGlow 8s ease-in-out infinite;
 }
+/* Dark Mode */
+[data-theme="dark"] .animated-bg {
+  background: linear-gradient(135deg,
+      #013d34,
+      #0a2e27,
+      #102c28,
+      #1b3a34);
+  background-size: 300% 300%;
+  animation: shineGlow 10s ease-in-out infinite;
+}
+
+/* Light mode: soft black shadow */
+.card-shadow {
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+    
+}
+
+/* Dark mode: subtle white glow shadow */
+[data-theme="dark"] .card-shadow {
+  box-shadow:
+    0 10px 25px rgba(255, 255, 255, 0.08),
+    0 4px 10px rgba(255, 255, 255, 0.04);
+    
+}
+
 
 /* Smooth animated gradient shifting */
 @keyframes shineGlow {

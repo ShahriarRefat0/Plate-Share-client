@@ -64,21 +64,30 @@ const Login = () => {
 
   return (
     <div className="min-h-screen animated-bg flex items-center justify-center">
-      <div className="w-full max-w-md bg-white shadow-xl rounded-3xl p-10 text-center">
-        <div className="w-14 h-14 mx-auto rounded-full bg-green-100 flex items-center justify-center">
+      <div className="w-full max-w-md card bg-base-100 shadow-xl rounded-3xl p-10 text-center">
+
+        {/* LOGO */}
+        <div className="w-14 h-14 mx-auto rounded-full bg-secondary flex items-center justify-center">
           <img className="w-10 h-10" src={logo} alt="Logo" />
         </div>
 
-        <h1 className="text-2xl font-semibold text-green-700 mt-4">LogIn</h1>
-        <p className="text-green-500 mb-6">Welcome To Back Plate Share</p>
+        {/* TITLE */}
+        <h1 className="text-2xl font-semibold text-primary mt-4">
+          Login
+        </h1>
+        <p className="opacity-70 mb-6">
+          Welcome back to Plate Share
+        </p>
 
+        {/* FORM */}
         <form onSubmit={handleLoginWithPass} className="space-y-4 text-left">
+
           <input
             type="email"
             name="email"
             required
             placeholder="Email Address"
-            className="input w-full rounded-full border border-green-300 p-3 bg-green-50"
+            className="input input-bordered w-full rounded-full border-primary bg-base-200"
           />
 
           <div className="relative">
@@ -87,53 +96,57 @@ const Login = () => {
               required
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="input w-full rounded-full border border-green-300 p-3 bg-green-50"
+              className="input input-bordered w-full rounded-full border-primary bg-base-200"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600 text-sm"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-primary"
             >
               {showPassword ? <FiEyeOff /> : <GoEye />}
             </button>
           </div>
 
-          <div className="text-sm text-green-700">
+          <div className="text-sm text-primary text-right">
             <a href="#" className="hover:underline">
-              Forget Password ?
+              Forgot password?
             </a>
           </div>
 
-          <button className="btn w-full rounded-full bg-green-500 text-white border-0 hover:bg-green-600">
+          <button className="btn btn-primary w-full rounded-full">
             Login
           </button>
         </form>
 
-        <div className="my-6 flex items-center gap-2 text-green-400">
-          <div className="flex-1 h-px bg-green-200"></div>✧
-          <div className="flex-1 h-px bg-green-200"></div>
+        {/* DIVIDER */}
+        <div className="my-6 flex items-center gap-2 opacity-60">
+          <div className="flex-1 h-px bg-base-content"></div>
+          ✧
+          <div className="flex-1 h-px bg-base-content"></div>
         </div>
 
-        <div className="flex gap-3">
-          <button
-            onClick={handleGoogleLogin}
-            className="btn w-full rounded-full border border-green-300 bg-green-50 text-green-600"
-          >
-            Login with Google <FcGoogle />
-          </button>
-        </div>
+        {/* SOCIAL LOGIN */}
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline w-full rounded-full border-primary"
+        >
+          Login with Google <FcGoogle />
+        </button>
 
-        <p className="mt-6 text-green-600 text-sm">
-          Don't have an account?{" "}
+        {/* REGISTER */}
+        <p className="mt-6 text-sm opacity-70">
+          Don’t have an account?{" "}
           <Link
             to="/register"
-            className="font-semibold text-green-700 hover:underline cursor-pointer"
+            className="font-semibold text-primary hover:underline"
           >
             Register here
           </Link>
         </p>
+
       </div>
     </div>
+
   );
 };
 

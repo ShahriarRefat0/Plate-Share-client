@@ -75,98 +75,100 @@ const [passwordError, setPasswordError] = useState("");
   };
 
   return (
-    <div>
-      <div className="min-h-screen animated-bg flex items-center justify-center">
-        <div className="w-full max-w-md bg-white shadow-xl rounded-3xl p-10 text-center">
-          <div className="w-14 h-14 mx-auto rounded-full bg-green-100 flex items-center justify-center">
-            <img className="w-10 h-10" src={logo} alt="Logo" />
-          </div>
+    <div className="min-h-screen animated-bg flex items-center justify-center">
+      <div className="w-full max-w-md card bg-base-100 shadow-xl rounded-3xl p-10 text-center">
 
-          <h1 className="text-2xl font-semibold text-green-700 mt-4">
-            Create Account
-          </h1>
-          <p className="text-green-500 mb-6">
-            Join Plate Share & Serve Humanity
-          </p>
-
-          <form onSubmit={handleRegister} className="space-y-4 text-left">
-            <input
-              name="name"
-              type="text"
-              placeholder="Full Name"
-              className="input w-full rounded-full border border-green-300 p-3 bg-green-50"
-            />
-
-            <input
-              name="photoURL"
-              type="text"
-              placeholder="Photo URL"
-              className="input w-full rounded-full border border-green-300 p-3 bg-green-50"
-            />
-
-            <input
-              name="email"
-              type="email"
-              placeholder="Email Address"
-              className="input w-full rounded-full border border-green-300 p-3 bg-green-50"
-            />
-
-            <div className="relative">
-              <input
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                className="input w-full rounded-full border border-green-300 p-3 bg-green-50"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-5 -translate-y-1/2 text-green-600 text-sm"
-              >
-                {showPassword ? <FiEyeOff /> : <GoEye />}
-              </button>
-
-              {passwordError && (
-                <p className="text-red-500 text-sm font-medium mt-2">
-                  {passwordError}
-                </p>
-              )}
-            </div>
-
-            {/* <input
-              type="password"
-              placeholder="Confirm Password"
-              className="input w-full rounded-full border border-green-300 p-3 bg-green-50"
-            /> */}
-
-            <button className="btn w-full rounded-full bg-green-500 text-white border-0 hover:bg-green-600">
-              Register
-            </button>
-          </form>
-
-          <div className="my-6 flex items-center gap-2 text-green-400">
-            <div className="flex-1 h-px bg-green-200"></div>✧
-            <div className="flex-1 h-px bg-green-200"></div>
-          </div>
-
-          <div className="flex gap-3">
-            <button className="btn w-full rounded-full border border-green-300 bg-green-50 text-green-600">
-              Login with Google <FcGoogle />
-            </button>
-          </div>
-
-          <p className="mt-6 text-green-600 text-sm">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="font-semibold text-green-700 hover:underline cursor-pointer"
-            >
-              Login here
-            </Link>
-          </p>
+        {/* LOGO */}
+        <div className="w-14 h-14 mx-auto rounded-full bg-secondary flex items-center justify-center">
+          <img className="w-10 h-10" src={logo} alt="Logo" />
         </div>
+
+        {/* TITLE */}
+        <h1 className="text-2xl font-semibold text-primary mt-4">
+          Create Account
+        </h1>
+        <p className="opacity-70 mb-6">
+          Join Plate Share & Serve Humanity
+        </p>
+
+        {/* FORM */}
+        <form onSubmit={handleRegister} className="space-y-4 text-left">
+
+          <input
+            name="name"
+            type="text"
+            placeholder="Full Name"
+            className="input input-bordered w-full rounded-full border-primary bg-base-200"
+          />
+
+          <input
+            name="photoURL"
+            type="text"
+            placeholder="Photo URL"
+            className="input input-bordered w-full rounded-full border-primary bg-base-200"
+          />
+
+          <input
+            name="email"
+            type="email"
+            placeholder="Email Address"
+            className="input input-bordered w-full rounded-full border-primary bg-base-200"
+          />
+
+          <div className="relative">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              className="input input-bordered w-full rounded-full border-primary bg-base-200"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-primary"
+            >
+              {showPassword ? <FiEyeOff /> : <GoEye />}
+            </button>
+
+            {passwordError && (
+              <p className="text-error text-sm font-medium mt-2">
+                {passwordError}
+              </p>
+            )}
+          </div>
+
+          <button className="btn btn-primary w-full rounded-full">
+            Register
+          </button>
+        </form>
+
+        {/* DIVIDER */}
+        <div className="my-6 flex items-center gap-2 opacity-60">
+          <div className="flex-1 h-px bg-base-content"></div>
+          ✧
+          <div className="flex-1 h-px bg-base-content"></div>
+        </div>
+
+        {/* GOOGLE LOGIN */}
+        <button className="btn btn-outline w-full rounded-full border-primary">
+          Login with Google <FcGoogle />
+        </button>
+
+        {/* LOGIN LINK */}
+        <p className="mt-6 text-sm opacity-70">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-semibold text-primary hover:underline"
+          >
+            Login here
+          </Link>
+        </p>
+
       </div>
     </div>
+
   );
 };
 

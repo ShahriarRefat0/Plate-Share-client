@@ -53,7 +53,7 @@ const AvailableFoods = () => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
       setCurrentPage(0);
-    }, 400); // 400ms debounce
+    }, 700); // 400ms debounce
 
     return () => clearTimeout(timer);
   }, [search]);
@@ -121,7 +121,7 @@ const AvailableFoods = () => {
       </div>
 
       {/* Foods Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
         {foods.length === 0 ? (
           <div className="col-span-full text-center py-10 space-y-6">
             <h2 className="text-3xl sm:text-4xl lg:text-6xl font-semibold opacity-60">

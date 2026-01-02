@@ -51,19 +51,19 @@ useEffect(() => {
         <div className="text-gray-600 text-sm mt-3">
           <div className="flex justify-between">
             <p className="font-medium flex items-center gap-1">
-              <IoIosPeople className="text-primary" /> Quantity:
+              <IoIosPeople className="icon" /> Quantity:
             </p>
             <p>{food_quantity}</p>
           </div>
           <div className="flex justify-between mt-1">
             <p className="font-medium flex items-center gap-1">
-              <FaMapMarkerAlt className="text-primary" /> Location:
+              <FaMapMarkerAlt className="icon" /> Location:
             </p>
             <p>{pickup_location}</p>
           </div>
           <div className="flex justify-between mt-1">
             <p className="font-medium flex items-center gap-1">
-              <FaRegClock className="text-primary" /> Expires:
+              <FaRegClock className="icon" /> Expires:
             </p>
             <p>{expire_date}</p>
           </div>
@@ -73,7 +73,7 @@ useEffect(() => {
         <div className="mt-4">
           <Link
             to={`/foods-details/${_id}`}
-            className="block text-center border border-[#009368] hover:bg-[#009368] text-primary hover:text-white py-2 px-5 rounded-full font-semibold  transition duration-300"
+            className="block text-center border border-[#009368] hover:bg-[#009368] icon hover:text-white py-2 px-5 rounded-full font-semibold  transition duration-300"
           >
             View Details
           </Link>

@@ -69,8 +69,8 @@ const OurMission = () => {
           <div
             data-aos="fade-up"
             key={mission.id}
-            className="relative border border-[#009368] rounded-xl p-8 text-center max-w-md mx-auto 
-transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl hover:border-[#00b17a]"
+            className="relative border border-primary rounded-xl p-8 text-center max-w-md mx-auto 
+transition-all duration-300 hover:-translate-y-3 hover:shadow-xl card-shadow "
           >
             <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#009368] w-16 h-16 rounded-md flex items-center justify-center shadow-md">
               {mission.icon}

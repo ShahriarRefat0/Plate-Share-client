@@ -121,19 +121,19 @@ const Navbar = () => {
   ) : (
     <Link
       to="/login"
-      className="bg-white text-green-700 font-semibold px-6 py-2 rounded-xl hover:bg-green-500 hover:text-white border border-white transition-all duration-300"
+        className="bg-white text-primary  btn-xs sm:btn-sm md:btn-md font-semibold px-6 py-2 rounded-xl hover:bg-primary hover:text-white border border-white transition-all duration-300"
     >
       Login
     </Link>
   );
 
   return (
-    <div className="bg-primary shadow-md h-20 font-secondary">
+    <div className="sticky top-0 z-50 bg-primary shadow-md h-20 font-secondary">
       <div className="navbar text-white w-11/12 mx-auto">
         {/* LEFT SIDE */}
         <div className="navbar-start">
           <div className="dropdown lg:hidden">
-            <div tabIndex={0} role="button" className="btn btn-ghost">
+            <div tabIndex={0} role="button" className=" pr-4 btn-ghost">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
