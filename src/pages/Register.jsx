@@ -13,65 +13,65 @@ const Register = () => {
   const { createUser, setUser, updateUser } = use(AuthContext);
   const navigate = useNavigate();
 const [passwordError, setPasswordError] = useState("");
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    const displayName = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
-    const photoURL = form.photoURL.value;
-    //console.log(displayName, email, password, photoURL);
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-          if (!passwordRegex.test(password)) {
-            setPasswordError(
-              "Password must have at least one uppercase, one lowercase letter, and be 6 characters long."
-            );
-            return;
-          } else {
-            setPasswordError(""); // clear error when valid
-          }
-    
-    //const newUser = {name, email, password, photoURL}
 
-    createUser(email, password)
-      .then((res) => {
-        updateUser(displayName, photoURL)
-        .then(() => {
-          const user = res.user;
-          //console.log(user)
-          setUser(user);
-        Swal.fire({
-          title: `Welcome, ${displayName}!`,
-          text: "Your account has been created successfully.",
-          icon: "success",
-          draggable: true,
-          confirmButtonColor: "#009368",
-          background: "#fff",
-          confirmButtonText: "Go to Dashboard",
-        });
-          navigate("/");
-        })
-          .catch(() => {
-           toast.error("Profile update failed.");
-           Swal.fire({
-             title: "Oops!",
-             text: "Something went wrong while updating your profile.",
-             icon: "error",
-             confirmButtonColor: "#d33",
-             draggable: true,
-           });
-          });
-      })
-      .catch((e) => {
-       // console.log(e)
-        Swal.fire({
-          title: "Registration Failed!",
-          text: "Oops! Something went wrong.",
-          icon: "error",
-          confirmButtonColor: "#d33",
-          draggable: true,
-        });
+    const form = e.target;
+    const displayName = form.name.value.trim();
+    const email = form.email.value.trim();
+    const password = form.password.value;
+    const photoURL = form.photoURL.value.trim();
+
+    // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        "Password must contain at least one uppercase, one lowercase letter, and be at least 6 characters."
+      );
+      return;
+    }
+    setPasswordError("");
+
+    try {
+      // 1️⃣ Create user
+      const result = await createUser(email, password);
+
+      // 2️⃣ Update profile
+      await updateUser(displayName, photoURL);
+
+      // 3️⃣ Save user to context
+      setUser(result.user);
+
+      // 4️⃣ Success alert
+      Swal.fire({
+        title: `Welcome, ${displayName}!`,
+        text: "Your account has been created successfully.",
+        icon: "success",
+        confirmButtonColor: "#009368",
+        confirmButtonText: "Go to Dashboard",
       });
+
+      navigate("/");
+    } catch (error) {
+      console.error("Registration error:", error.code, error.message);
+
+      let message = "Something went wrong. Please try again.";
+
+      if (error.code === "auth/email-already-in-use") {
+        message = "This email is already registered.";
+      } else if (error.code === "auth/invalid-email") {
+        message = "Invalid email address.";
+      } else if (error.code === "auth/weak-password") {
+        message = "Password is too weak.";
+      }
+
+      Swal.fire({
+        title: "Registration Failed!",
+        text: message,
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
+    }
   };
 
   return (
@@ -84,7 +84,7 @@ const [passwordError, setPasswordError] = useState("");
         </div>
 
         {/* TITLE */}
-        <h1 className="text-2xl font-semibold text-primary mt-4">
+        <h1 className="text-2xl font-semibold title mt-4">
           Create Account
         </h1>
         <p className="opacity-70 mb-6">
@@ -160,7 +160,7 @@ const [passwordError, setPasswordError] = useState("");
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-semibold text-primary hover:underline"
+            className="font-semibold title hover:underline"
           >
             Login here
           </Link>

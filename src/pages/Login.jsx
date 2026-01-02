@@ -53,8 +53,8 @@ const Login = () => {
 
   const autofillDemo = (type) => {
     if (type === 'user') {
-      setEmail('demo@plateshare.local');
-      setPassword('DemoUser123');
+      setEmail('user@plateshare.com');
+      setPassword('123#Aa');
     } else if (type === 'admin') {
       setEmail('admin@plateshare.local');
       setPassword('AdminDemo123');
@@ -71,7 +71,7 @@ const Login = () => {
         </div>
 
         {/* TITLE */}
-        <h1 className="text-2xl font-semibold text-primary mt-4">
+        <h1 className="text-2xl title text-primary mt-4">
           Login
         </h1>
         <p className="opacity-70 mb-6">
@@ -112,7 +112,7 @@ const Login = () => {
 
           {error && <p className="text-sm text-error">{error}</p>}
 
-          <div className="text-sm text-primary text-right">
+          <div className="text-sm title text-right">
             <a href="#" className="hover:underline">
               Forgot password?
             </a>
@@ -124,7 +124,7 @@ const Login = () => {
 
           <div className="flex gap-2">
             <button type="button" onClick={() => autofillDemo('user')} className="btn btn-outline rounded-full flex-1">Demo User</button>
-            <button type="button" onClick={() => autofillDemo('admin')} className="btn btn-outline rounded-full flex-1">Demo Admin</button>
+            {/* <button type="button" onClick={() => autofillDemo('admin')} className="btn btn-outline rounded-full flex-1">Demo Admin</button> */}
           </div>
         </form>
 
@@ -145,7 +145,7 @@ const Login = () => {
           Don’t have an account?{" "}
           <Link
             to="/register"
-            className="font-semibold text-primary hover:underline"
+            className="font-semibold title hover:underline"
           >
             Register here
           </Link>
