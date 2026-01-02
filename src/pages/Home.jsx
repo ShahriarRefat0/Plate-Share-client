@@ -49,7 +49,6 @@ const Home = () => {
       <StatisticsSection />
       <TestimonialsSection />
       <BlogSection />
-
       <NewsletterCTA />
       
       

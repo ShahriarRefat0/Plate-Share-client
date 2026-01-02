@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaMapMarkerAlt, FaRegClock } from "react-icons/fa";
 import { HiOutlineArrowLeft } from "react-icons/hi2";
 import { IoIosPeople } from "react-icons/io";
@@ -12,7 +12,7 @@ const FoodsDetails = () => {
   const [loading, setLoading] = useState(false);
   const [foodDetails, setFoodDetails] = useState();
   const reqModalRef = useRef();
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext) || {};
   const [foodRequests, setFoodRequests] = useState([]);
   // console.log(id)
   const {
@@ -103,20 +103,25 @@ const FoodsDetails = () => {
   };
 
   useEffect(() => {
+    // fetch requests only when user is available
     setLoading(true);
-    if (!id || !user?.email) return;
+    if (!id || !user?.email) {
+      setFoodRequests([]);
+      setLoading(false);
+      return;
+    }
+
     fetch(
       `http://localhost:3000/food-request?req_foodId=${id}&donator_email=${user?.email}`
     )
       .then((res) => res.json())
       .then((data) => {
-        //  console.log("foods req", data);
         setFoodRequests(data);
       })
-      .catch((e) => {
-        // console.log(e);
-      });
-    setLoading(false);
+      .catch(() => {
+        setFoodRequests([]);
+      })
+      .finally(() => setLoading(false));
   }, [id, user?.email]);
 
   useEffect(() => {
@@ -143,11 +148,11 @@ const FoodsDetails = () => {
     <div className="max-w-7xl mx-auto px-4 py-10 md:py-16">
       <Link
         to="/"
-        className="mb-5 flex gap-3 items-center text-primary cursor-pointer"
+        className="mb-5 flex gap-3 items-center title cursor-pointer"
       >
         <HiOutlineArrowLeft size={25} /> <p>Back</p>
       </Link>
-      <div className="bg-white shadow-2xl rounded-3xl overflow-hidden border border-gray-100">
+      <div className=" shadow-2xl rounded-3xl overflow-hidden border border-primary">
         <div className="flex flex-col md:flex-row">
           <div className="w-full h-64 sm:h-72 md:h-80 lg:h-[500px] overflow-hidden rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none relative">
             <img
@@ -156,9 +161,8 @@ const FoodsDetails = () => {
               className="w-full h-full object-cover"
             />
             <div
-              className={`absolute top-4 left-4 bg-[#009368] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md ${
-                food_status == "Available" ? "bg-[#009368] " : "bg-[#ffc70f] "
-              }`}
+              className={`absolute top-4 left-4 bg-[#009368] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md ${food_status == "Available" ? "bg-[#009368] " : "bg-[#ffc70f] "
+                }`}
             >
               {food_status}
             </div>
@@ -167,25 +171,25 @@ const FoodsDetails = () => {
           {/* Right Side — Details */}
           <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-between">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-[#009368] mb-3 font-primary">
+              <h1 className="text-3xl md:text-4xl font-bold title mb-3 font-primary">
                 {food_name}
               </h1>
 
-              <div className="space-y-3 text-gray-700">
+              <div className="space-y-3 ">
                 <div className="flex justify-between items-center border-b pb-2">
                   <p className="flex items-center gap-2 font-medium">
                     <IoIosPeople className="text-[#009368]" /> Quantity:
                   </p>
-                  <p className="text-gray-800 font-semibold">
+                  <p className="text-gray-400 font-semibold">
                     Serves {food_quantity} People
                   </p>
                 </div>
 
                 <div className="flex justify-between items-center border-b pb-2">
                   <p className="flex items-center justify-between  gap-3 font-medium">
-                    <FaMapMarkerAlt className="text-[#009368]" /> Location:
+                    <FaMapMarkerAlt className="icon" /> Location:
                   </p>
-                  <p className="text-gray-800 font-semibold">
+                  <p className="text-gray-400 font-semibold">
                     {pickup_location}
                   </p>
                 </div>
@@ -194,24 +198,24 @@ const FoodsDetails = () => {
                   <p className="flex items-center gap-2 font-medium">
                     <FaRegClock className="text-[#009368]" /> Expires:
                   </p>
-                  <p className="text-gray-800 font-semibold">{expire_date}</p>
+                  <p className="text-gray-400 font-semibold">{expire_date}</p>
                 </div>
 
-                <p className="text-gray-600 leading-relaxed mt-4">
+                <p className="text-gray-400 leading-relaxed mt-4">
                   {additional_notes || "No additional notes available."}
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+            <div className="mt-6 flex items-center gap-4  p-4 rounded-xl border border-gray-200">
               <img
                 src={image}
                 alt={name}
                 className="w-14 h-14 rounded-full border-2 border-[#009368] object-cover"
               />
               <div>
-                <p className="font-semibold text-gray-800">{name}</p>
-                <p className="text-gray-500 text-sm">{email}</p>
+                <p className="font-semibold ">{name}</p>
+                <p className="text-gray-400 text-sm">{email}</p>
               </div>
             </div>
 
@@ -253,25 +257,26 @@ const FoodsDetails = () => {
                       name="req_location"
                       placeholder="Write Location"
                       required
-                      className="input input-bordered w-full rounded-full bg-green-50"
+                      className="input  w-full  input-custo"
                     />
 
                     <input
                       type="text"
                       name="req_contact"
-                      placeholder="Contact No:"
+                      placeholder="Contact No"
                       required
-                      className="input input-bordered w-full rounded-full bg-green-50"
+                      className="input w-full input-custo"
                     />
                   </div>
 
                   <textarea
                     name="req_message"
-                    placeholder="Why Need Food "
+                    placeholder="Why Need Food"
                     rows="3"
-                    className="textarea textarea-bordered w-full rounded-2xl bg-green-50"
+                    className="textarea w-full input-custo rounded-2xl!"
                   ></textarea>
                 </div>
+
 
                 {/* Submit Button */}
                 <button
@@ -281,7 +286,7 @@ const FoodsDetails = () => {
                 >
                   {/* {loading ? "Adding..." : "Add Food"} */} Submit Request
                 </button>
-                <button onClick={handleReqModalCose} className="btn-secondary ">
+                <button onClick={handleReqModalCose} className="btn btn-primary ">
                   Close
                 </button>
               </form>
@@ -345,11 +350,10 @@ const FoodsDetails = () => {
                       </td>
                       <td>
                         <div
-                          className={`badge text-white ${
-                            request?.req_status === "Pending"
-                              ? "badge-warning "
-                              : "badge-success "
-                          }`}
+                          className={`badge text-white ${request?.req_status === "Pending"
+                            ? "badge-warning "
+                            : "badge-success "
+                            }`}
                         >
                           {request?.req_status}
                         </div>

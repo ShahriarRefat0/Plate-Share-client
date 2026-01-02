@@ -13,6 +13,7 @@ import FoodsDetails from "../pages/FoodsDetails";
 import PrivateRoute from "./PrivetRoute";
 import ErrorPage from "../pages/ErrorPage";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import ContactUs from "../pages/Contact-Us";
 
 
 
@@ -65,15 +66,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/foods-details/:id",
-        element: (
-          <PrivateRoute>
-            <FoodsDetails></FoodsDetails>
-          </PrivateRoute>
-        ),
+        element: <FoodsDetails></FoodsDetails>,
       },
       {
         path: "/about-us",
         element: <AboutUs></AboutUs>,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs></ContactUs>,
       },
       {
         path: '/*',

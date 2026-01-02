@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../public/logo.png";
 import { GoEye } from "react-icons/go";
 import { FiEyeOff } from "react-icons/fi";
@@ -9,57 +9,56 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const {  loginWithGoogle, loginWithPass } = use(AuthContext);
+  const { loginWithGoogle, loginWithPass, loginWithFacebook, loginWithGithub } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation()
   //console.log(user)
 
-  const handleGoogleLogin = (e) => {
-    e.preventDefault();
-    console.log("google login");
-    loginWithGoogle()
-      .then((res) => {
-        //console.log(res);
-        Swal.fire({
-          title: "Login Successful",
-          icon: "success",
-          draggable: true,
-        });
-        navigate(`${ location.state ? location.state : '/'}`);
-      })
-      .catch((e) => {
-        //console.log(e.message);
-         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
-      } );
+  const handleSocialLogin = async (provider) => {
+    setError("");
+    try {
+      if (provider === 'google') await loginWithGoogle();
+      else if (provider === 'facebook') await loginWithFacebook();
+      else if (provider === 'github') await loginWithGithub();
+
+      Swal.fire({ title: "Login Successful", icon: "success", draggable: true });
+      navigate(`${location.state ? location.state : '/'}`);
+    } catch (e) {
+      console.error(e);
+      setError(e.message || 'Social login failed');
+      Swal.fire({ icon: "error", title: "Oops...", text: e.message || "Something went wrong!" });
+    }
   };
 
-  const handleLoginWithPass = (e) => {
+  const handleLoginWithPass = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    //console.log(email, password);
-    loginWithPass(email, password)
-      .then((res) => {
-        //        console.log("login by pass", res);
-        Swal.fire({
-          title: "Login Successful",
-          icon: "success",
-          draggable: true,
-        });
-        navigate(`${location.state ? location.state : "/"}`);
-      })
-      .catch((e) => {
-        console.log(e);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
-      });
+    setError("");
+    if (!email || !password) {
+      setError('Please enter email and password');
+      return;
+    }
+    try {
+      await loginWithPass(email, password);
+      Swal.fire({ title: "Login Successful", icon: "success", draggable: true });
+      navigate(`${location.state ? location.state : "/"}`);
+    } catch (e) {
+      console.error(e);
+      setError(e.message || 'Login failed');
+      Swal.fire({ icon: "error", title: "Login Failed", text: e.message || "Something went wrong!" });
+    }
+  };
+
+  const autofillDemo = (type) => {
+    if (type === 'user') {
+      setEmail('demo@plateshare.local');
+      setPassword('DemoUser123');
+    } else if (type === 'admin') {
+      setEmail('admin@plateshare.local');
+      setPassword('AdminDemo123');
+    }
   };
 
   return (
@@ -85,6 +84,8 @@ const Login = () => {
           <input
             type="email"
             name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="Email Address"
             className="input input-bordered w-full rounded-full border-primary bg-base-200"
@@ -93,6 +94,8 @@ const Login = () => {
           <div className="relative">
             <input
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
               type={showPassword ? "text" : "password"}
               placeholder="Password"
@@ -107,6 +110,8 @@ const Login = () => {
             </button>
           </div>
 
+          {error && <p className="text-sm text-error">{error}</p>}
+
           <div className="text-sm text-primary text-right">
             <a href="#" className="hover:underline">
               Forgot password?
@@ -116,6 +121,11 @@ const Login = () => {
           <button className="btn btn-primary w-full rounded-full">
             Login
           </button>
+
+          <div className="flex gap-2">
+            <button type="button" onClick={() => autofillDemo('user')} className="btn btn-outline rounded-full flex-1">Demo User</button>
+            <button type="button" onClick={() => autofillDemo('admin')} className="btn btn-outline rounded-full flex-1">Demo Admin</button>
+          </div>
         </form>
 
         {/* DIVIDER */}
@@ -126,12 +136,9 @@ const Login = () => {
         </div>
 
         {/* SOCIAL LOGIN */}
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-outline w-full rounded-full border-primary"
-        >
-          Login with Google <FcGoogle />
-        </button>
+       
+          <button onClick={() => handleSocialLogin('google')} className="btn btn-outline  rounded-full border-primary flex items-center justify-center gap-2">Login with Google <FcGoogle /></button>
+       
 
         {/* REGISTER */}
         <p className="mt-6 text-sm opacity-70">

@@ -60,7 +60,15 @@ const Navbar = () => {
           to="/about-us"
           className={({ isActive }) => (isActive ? "active" : "")}
         >
-          About Us
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/contact-us"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          Contact Us
         </NavLink>
       </li>
     </>

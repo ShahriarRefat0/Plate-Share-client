@@ -89,6 +89,15 @@
     
 }
 
+.input-custo {
+  @apply bg-green-50 rounded-full  text-gray-900 placeholder-gray-500 border-[#009368];
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .input-custo {
+  @apply bg-gray-700 rounded-full  text-gray-100 placeholder-gray-400 border-[#009368];
+}
+
 
 /* Smooth animated gradient shifting */
 @keyframes shineGlow {

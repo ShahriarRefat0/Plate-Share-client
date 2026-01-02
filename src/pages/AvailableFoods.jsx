@@ -68,7 +68,7 @@ const AvailableFoods = () => {
       {/* Heading */}
       <div className="text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-primary font-semibold">
-          Available <span className="text-primary">Foods</span>
+          Available <span className="title">Foods</span>
         </h1>
       </div>
 
@@ -81,7 +81,7 @@ const AvailableFoods = () => {
 
         {/* Search */}
         <form className="w-full sm:w-[350px]">
-          <label className="input flex items-center gap-2 w-full border-2 border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary rounded-lg">
+          <label className="input flex items-center gap-2 w-full input-custo focus-within:border-primary focus-within:ring-2 focus-within:ring-primary rounded-lg">
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +112,7 @@ const AvailableFoods = () => {
         {/* Sort Dropdown */}
         <select
           onChange={handleSelect}
-          className="select select-bordered border-2 border-primary w-full sm:w-auto"
+          className="select select-bordered  border-[#009368] w-full sm:w-auto"
         >
           <option value="">Sort by Date</option>
           <option value="expire_date-desc">Date : New → Old</option>

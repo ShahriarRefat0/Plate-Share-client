@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 const TeamCard = ({ name, role, img }) => {
   return (
-    <div className="card bg-base-100 shadow p-6 items-center text-center transition-all">
+    <div className="card bg-base-100 card-shadow p-6 items-center text-center transition-all">
       <div className="w-28 h-28 rounded-full overflow-hidden mb-4 ring-2 ring-primary/30">
         <img
           src={img}
@@ -50,7 +50,7 @@ const AboutUs = () => {
             </div>
           </div>
 
-          <div className="flex-1 w-full">
+          <div className="flex-1 card-shadow w-full">
             <div className="rounded-xl overflow-hidden shadow-lg bg-white/10 p-2">
               <img
                 src="https://images.unsplash.com/photo-1544025162-d76694265947"
@@ -81,7 +81,7 @@ const AboutUs = () => {
             </p>
           </div>
 
-          <div className="card bg-base-200 shadow p-6 text-center">
+          <div className="card card-shadow bg-base-200 shadow p-6 text-center">
             <div className="text-3xl font-bold text-primary">12k+</div>
             <div className="text-sm opacity-70 mb-4">Meals Shared</div>
 
@@ -115,7 +115,7 @@ const AboutUs = () => {
                 desc: "Food reaches people and organizations in need.",
               },
             ].map((item, i) => (
-              <div key={i} className="card bg-base-100 shadow p-6">
+              <div key={i} className="card card-shadow bg-base-100 shadow p-6">
                 <h4 className="font-semibold mb-2">{item.title}</h4>
                 <p className="text-sm opacity-70">{item.desc}</p>
               </div>
