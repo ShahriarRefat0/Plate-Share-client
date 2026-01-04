@@ -98,6 +98,25 @@
   @apply bg-gray-700 rounded-full  text-gray-100 placeholder-gray-400 border-[#009368];
 }
 
+.dash-nav {
+  @apply bg-[#f1f1f1] ;
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .dash-nav {
+  @apply bg-[#232332];
+}
+
+
+.dash-side {
+  @apply bg-[#f1f1f1] text-[##009368];
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .dash-side {
+  @apply  bg-[#272738] text-[##009368];
+}
+
 
 
 /* Smooth animated gradient shifting */

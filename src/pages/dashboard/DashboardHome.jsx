@@ -19,23 +19,19 @@ import {
 } from "react-icons/hi";
 
 import { AuthContext } from "../../authProvider/AuthProvider";
-import {
-  getDashboardSummary,
-  getFoodActivity,
-  getRequestStatus,
-  getRecentRequests,
-} from "../../api/dashboardApi";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const COLORS = ["#22c55e", "#3b82f6", "#f59e0b"];
+const API = import.meta.env.VITE_API_URL;
 
 const DashboardHome = () => {
   const { user } = useContext(AuthContext);
 
-  const [summary, setSummary] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState([]);
   const [lineData, setLineData] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [recentRequests, setRecentRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user?.email) return;
@@ -46,72 +42,72 @@ const DashboardHome = () => {
 
         const [
           summaryRes,
-          foodActivityRes,
-          requestStatusRes,
-          recentReqRes,
+          activityRes,
+          statusRes,
+          recentRes,
         ] = await Promise.all([
-          getDashboardSummary(user.email),
-          getFoodActivity(user.email),
-          getRequestStatus(user.email),
-          getRecentRequests(user.email),
+          fetch(`${API}/dashboard/summary?email=${user.email}`),
+          fetch(`${API}/dashboard/food-activity?email=${user.email}`),
+          fetch(`${API}/dashboard/request-status?email=${user.email}`),
+          fetch(`${API}/dashboard/recent-requests?email=${user.email}`),
         ]);
 
-        setSummary(summaryRes);
+        const summary = await summaryRes.json();
+        const activity = await activityRes.json();
+        const status = await statusRes.json();
+        const recent = await recentRes.json();
 
-        // format line chart
+        /* KPI CARDS */
+        setStats([
+          {
+            title: "Total Foods",
+            value: summary.totalFoods,
+            icon: <HiInbox />,
+            trend: "All time",
+          },
+          {
+            title: "Active Foods",
+            value: summary.activeFoods,
+            icon: <HiClipboardCheck />,
+            trend: "Available now",
+          },
+          {
+            title: "Total Requests",
+            value: summary.totalRequests,
+            icon: <HiChartBar />,
+            trend: "Received",
+          },
+        ]);
+
+        /* LINE CHART */
         setLineData(
-          foodActivityRes
-            .filter((item) => item._id) // remove null dates
-            .map((item) => ({
-              name: item._id.slice(5), // MM-DD
-              foods: item.foods,
-            }))
+          activity.map((item) => ({
+            name: item._id,
+            foods: item.foods,
+          }))
         );
 
-
-        // format pie chart
+        /* PIE CHART */
         setPieData(
-          requestStatusRes.map((item) => ({
+          status.map((item) => ({
             name: item._id,
             value: item.value,
           }))
         );
 
-        setRecentRequests(recentReqRes);
-      } catch (error) {
-        console.error("Dashboard load failed", error);
+        /* TABLE */
+        setRecentRequests(recent);
+      } catch (err) {
+        console.error("Dashboard fetch error:", err);
       } finally {
         setLoading(false);
       }
     };
 
     loadDashboard();
-  }, [user]);
+  }, [user?.email]);
 
-  if (loading) {
-    return <p className="text-center py-20">Loading dashboard...</p>;
-  }
-
-  const stats = [
-    {
-      title: "Total Foods",
-      value: summary.totalFoods || 0,
-      icon: <HiInbox />,
-      trend: "Overall",
-    },
-    {
-      title: "Active Foods",
-      value: summary.activeFoods || 0,
-      icon: <HiClipboardCheck />,
-      trend: "Available",
-    },
-    {
-      title: "Requests",
-      value: summary.totalRequests || 0,
-      icon: <HiChartBar />,
-      trend: "Received",
-    },
-  ];
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="p-5 md:p-10 space-y-10">
@@ -172,6 +168,7 @@ const DashboardHome = () => {
                 <Pie
                   data={pieData}
                   dataKey="value"
+                  nameKey="name"
                   innerRadius={55}
                   outerRadius={85}
                 >

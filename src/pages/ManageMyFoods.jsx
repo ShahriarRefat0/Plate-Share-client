@@ -78,7 +78,7 @@ const ManageMyFoods = () => {
 
     // console.log("update food",updateFood);
 
-    fetch(`http://localhost:3000/update-food/${selectedFood?._id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/update-food/${selectedFood?._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -117,7 +117,7 @@ const ManageMyFoods = () => {
     setLoading(true);
     if (!user?.email) return;
 
-    fetch(`http://localhost:3000/my-foods?email=${user.email}`)
+    fetch(`${import.meta.env.VITE_API_URL}/my-foods?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         //console.log(data)
@@ -136,7 +136,7 @@ const ManageMyFoods = () => {
     foodModalRef.current.close();
   };
 
-console.log(myFoods)
+// console.log(myFoods)
 
   if (loading) return <LoadingSpinner></LoadingSpinner>;
 

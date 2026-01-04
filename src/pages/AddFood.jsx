@@ -44,7 +44,7 @@ const AddFood = () => {
 
     //console.log(newFood);
 
-    fetch("http://localhost:3000/foods", {
+    fetch(`${import.meta.env.VITE_API_URL}/foods`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -78,7 +78,7 @@ const AddFood = () => {
 
   return (
     <div className="py-10 min-h-screen ">
-      
+
       <div className="card">
         <div className=" flex items-center justify-center  py-10">
           <form

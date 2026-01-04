@@ -28,7 +28,7 @@ const FoodsDetails = () => {
   } = foodDetails || {};
 
   const handleRequestStatus = (id, foodId, status) => {
-    fetch(`http://localhost:3000/update-request/${id}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/update-request/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -77,7 +77,7 @@ const FoodsDetails = () => {
 
     // console.log(reqInfo)
 
-    fetch(`http://localhost:3000/food-request`, {
+    fetch(`${import.meta.env.VITE_API_URL}/food-request`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -112,7 +112,7 @@ const FoodsDetails = () => {
     }
 
     fetch(
-      `http://localhost:3000/food-request?req_foodId=${id}&donator_email=${user?.email}`
+      `${import.meta.env.VITE_API_URL}/food-request?req_foodId=${id}&donator_email=${user?.email}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -125,7 +125,7 @@ const FoodsDetails = () => {
   }, [id, user?.email]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/foods/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/foods/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setFoodDetails(data);

@@ -9,7 +9,7 @@ const MyFoodRequests = () => {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`http://localhost:3000/user-food-request?user=${user?.email}`)
+    fetch(`${import.meta.env.VITE_API_URL}/user-food-request?user=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         //console.log("foods req", data);

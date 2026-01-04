@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_URL; // e.g. http://localhost:3000
+const API_BASE = import.meta.env.VITE_API_URL; // e.g. ${import.meta.env.VITE_API_URL}
 
 export const getDashboardSummary = async (email) => {
   const { data } = await axios.get(

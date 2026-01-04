@@ -3,6 +3,8 @@ import { NavLink, Outlet, useNavigate } from "react-router";
 import { AuthContext } from "../authProvider/AuthProvider";
 import { IoLogOut, IoMenu } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
+import { MdDashboard, MdFastfood, MdManageAccounts } from "react-icons/md";
+import { FaClipboardList } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const { user, logOutUser } = useContext(AuthContext);
@@ -21,17 +23,38 @@ const DashboardLayout = () => {
   };
 
   const navItems = [
-    { to: "/dashboard", label: "Dashboard Home" },
-    { to: "/dashboard/profile", label: "Profile" },
-    { to: "/dashboard/add-food", label: "Add Food" },
-    { to: "/dashboard/manage-my-foods", label: "Manage My Foods" },
-    { to: "/dashboard/my-food-requests", label: "My Food Requests" },
+    {
+      to: "/dashboard",
+      label: "Dashboard Home",
+      icon: <MdDashboard />,
+    },
+    {
+      to: "/dashboard/profile",
+      label: "Profile",
+      icon: <FaUserCircle />,
+    },
+    {
+      to: "/dashboard/add-food",
+      label: "Add Food",
+      icon: <MdFastfood />,
+    },
+    {
+      to: "/dashboard/manage-my-foods",
+      label: "Manage My Foods",
+      icon: <MdManageAccounts />,
+    },
+    {
+      to: "/dashboard/my-food-requests",
+      label: "My Food Requests",
+      icon: <FaClipboardList />,
+    },
   ];
+
 
   return (
     <div className="min-h-screen bg-base-200 text-base-content">
       {/* HEADER */}
-      <header className="bg-[#f1f1f1] sticky top-0 z-50">
+      <header className="dash-nav sticky top-0 z-50">
         <div className="w-11/12 mx-auto flex items-center justify-between h-16">
           {/* LEFT */}
           <div className="flex items-center gap-3">
@@ -62,11 +85,11 @@ const DashboardLayout = () => {
             {open && (
               <div className="absolute right-0 mt-2 w-48 rounded-xl bg-base-100 shadow-lg border">
                 <NavLink
-                  to="/dashboard"
+                  to="/"
                   onClick={() => setOpen(false)}
                   className="block px-4 py-2 hover:bg-base-200 rounded-t-xl"
                 >
-                  Dashboard Home
+                  Home
                 </NavLink>
 
                 <NavLink
@@ -104,7 +127,7 @@ const DashboardLayout = () => {
           className={`
             fixed lg:static top-0 left-0 z-50
             h-full w-64 lg:w-auto
-            bg-[#eaeaea] 
+            dash-side
             transform transition-transform duration-300
             ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
             lg:translate-x-0
@@ -124,13 +147,14 @@ const DashboardLayout = () => {
                 end={item.to === "/dashboard"}
                 onClick={() => setSidebarOpen(false)}
                 className={({ isActive }) =>
-                  `block px-3 py-2 rounded-lg transition ${isActive
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition ${isActive
                     ? "bg-primary/10 text-primary font-semibold"
                     : "hover:bg-base-200"
                   }`
                 }
               >
-                {item.label}
+                <span className="text-xl text-current">{item.icon}</span>
+                <span>{item.label}</span>
               </NavLink>
             ))}
           </nav>

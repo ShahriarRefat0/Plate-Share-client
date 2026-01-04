@@ -4,8 +4,7 @@ import logo from "../../public/logo.png";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../authProvider/AuthProvider";
 import { IoLogOut } from "react-icons/io5";
-import { MdOutlineLibraryAdd, MdOutlineManageHistory } from "react-icons/md";
-import { LuGitPullRequestCreateArrow } from "react-icons/lu";
+import { MdDashboard } from "react-icons/md";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import Swal from "sweetalert2";
 import useTheme from "../hooks/useTheme";
@@ -108,7 +107,7 @@ const Navbar = () => {
 
         <li>
           <Link to="/dashboard">
-            <FaUser />
+            <MdDashboard />
             Dashboard Home
           </Link>
         </li>
@@ -121,25 +120,6 @@ const Navbar = () => {
         </li>
 
         <li className="divider" />
-
-        <li>
-          <Link to="/dashboard/add-food">
-            <MdOutlineLibraryAdd />
-            Add Food
-          </Link>
-        </li>
-        <li>
-          <Link to="/dashboard/manage-my-foods">
-            <MdOutlineManageHistory />
-            Manage My Foods
-          </Link>
-        </li>
-        <li>
-          <Link to="/dashboard/my-food-requests">
-            <LuGitPullRequestCreateArrow />
-            My Food Requests
-          </Link>
-        </li>
 
         <li>
           <button
