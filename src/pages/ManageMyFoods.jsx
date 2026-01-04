@@ -28,7 +28,7 @@ const ManageMyFoods = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/delete-food/${food?._id}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/delete-food/${food?._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

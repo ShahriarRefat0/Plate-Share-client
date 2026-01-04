@@ -7,22 +7,22 @@ import axios from "axios";
 const FeaturedFoods = () => {
   const [foods, setFoods] = useState([]);
 
-  useEffect(() => {
-    const foodFetcher = async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_API_URL}/highest-quantity-foods`
-        );
-        setFoods(data);
-      } catch (error) {
-        console.error("Failed to fetch highest quantity foods:", error);
-      }
-    };
+useEffect(() => {
+  const foodFetcher = async () => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/highest-quantity-foods`
+      );
+      setFoods(data);
+    } catch (error) {
+      console.error("Failed to fetch highest quantity foods:", error);
+    }
+  };
 
-    foodFetcher();
-  }, []);
+  foodFetcher();
+}, []);
 
-  //console.log(foods)
+  //console.log("Featured Foods:", foods);
 
   return (
     <div className="w-11/12  mx-auto my-20">

@@ -6,7 +6,7 @@ const ErrorPage = () => {
   return (
     <main className="grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div className="text-center">
-        <img className='md:w-[70%] w-[50%] mx-auto' src={ error} alt="" />
+        <img className='md:w-[70%] w-[50%] mx-auto' src={error} alt="" />
         <h1 className="mt-4 text-3xl md:text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
           Page not found
         </h1>
@@ -20,7 +20,7 @@ const ErrorPage = () => {
           >
             Go back home
           </Link>
-        
+
         </div>
       </div>
     </main>

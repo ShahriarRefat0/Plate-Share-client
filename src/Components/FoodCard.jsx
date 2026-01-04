@@ -7,19 +7,19 @@ import { Link } from 'react-router';
 
 const FoodCard = ({ food }) => {
 
-useEffect(() => {
-  Aos.refresh();
-}, []);
+  useEffect(() => {
+    Aos.refresh();
+  }, []);
 
   const {
     food_name,
     food_image,
     food_quantity,
     pickup_location,
-    expire_date,_id,
+    expire_date, _id,
     donator: { name, image } = {},
   } = food || {};
-//console.log(food)
+  //console.log(food)
 
 
   return (
