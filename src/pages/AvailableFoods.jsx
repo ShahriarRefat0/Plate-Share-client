@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FoodCard from "../Components/FoodCard";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import axios from "axios";
 
 const AvailableFoods = () => {
   const [loading, setLoading] = useState(true);
@@ -16,18 +17,23 @@ const AvailableFoods = () => {
 
 
   useEffect(() => {
-    setLoading(true);
+    const fetchFoods = async () => {
+      try {
+        setLoading(true);
 
-    fetch(
-      `http://localhost:3000/foods?limit=${limit}&skip=${currentPage * limit}&status=available&sort=${sort}&order=${order}&search=${debouncedSearch}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API_URL}/foods?limit=${limit}&skip=${currentPage * limit}&status=available&sort=${sort}&order=${order}&search=${debouncedSearch}`
+        )
         setFoods(data.foods);
         SetTotalFoods(data.total);
         setTotalPage(Math.ceil(data.total / limit));
-      })
-      .finally(() => setLoading(false));
+      } catch (error) {
+        console.error("error to load", error)
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFoods();
   }, [currentPage, sort, order, debouncedSearch]);
 
 

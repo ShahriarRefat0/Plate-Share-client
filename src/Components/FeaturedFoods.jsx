@@ -2,17 +2,26 @@ import React, { useEffect, useState } from "react";
 import FoodCard from "./FoodCard";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { Link } from "react-router";
+import axios from "axios";
 
 const FeaturedFoods = () => {
   const [foods, setFoods] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/highest-quantity-foods")
-      .then((res) => res.json())
-      .then((data) => {
+    const foodFetcher = async () => {
+      try {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API_URL}/highest-quantity-foods`
+        );
         setFoods(data);
-      });
+      } catch (error) {
+        console.error("Failed to fetch highest quantity foods:", error);
+      }
+    };
+
+    foodFetcher();
   }, []);
+
   //console.log(foods)
 
   return (

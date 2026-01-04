@@ -31,7 +31,7 @@ const DashboardLayout = () => {
   return (
     <div className="min-h-screen bg-base-200 text-base-content">
       {/* HEADER */}
-      <header className="bg-base-100 sticky top-0 z-50 border-b">
+      <header className="bg-[#f1f1f1] sticky top-0 z-50">
         <div className="w-11/12 mx-auto flex items-center justify-between h-16">
           {/* LEFT */}
           <div className="flex items-center gap-3">
@@ -104,11 +104,12 @@ const DashboardLayout = () => {
           className={`
             fixed lg:static top-0 left-0 z-50
             h-full w-64 lg:w-auto
-            bg-base-100 border-r
+            bg-[#eaeaea] 
             transform transition-transform duration-300
             ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
             lg:translate-x-0
             lg:col-span-1
+            position sticky
           `}
         >
           <div className="p-4 font-semibold lg:hidden">
